@@ -28,12 +28,12 @@ variable "gcpProject" {
 variable "gcpZone" {
   type = string
 }
-variable "win10Count" {                 ###winserver
+/*variable "winvmCount" {                 ###winserver
   type = number
 }
-variable "customerNum" {
+variable "customerAbv" {
   type = string
-}
+}*/
 
 # Locals
 
@@ -60,20 +60,20 @@ data "google_compute_subnetwork" "us-central1" {
 }
 
 data "google_compute_network" "fg1-1-net" {
-  name    = "fortilab1-1-net"
+  name    = "fortinet-nw1"
   project = var.gcpProject
 }
 data "google_compute_subnetwork" "fg1-1-sn" {
-  name    = "fortilab1-1-subnet"
+  name    = "fortinet-1sn1"
   project = var.gcpProject
 }
 
 data "google_compute_network" "fg1-2-net" {
-  name    = "fortilab1-2-net"
+  name    = "fortinet-nw2"
   project = var.gcpProject
 }
 data "google_compute_subnetwork" "fg1-2-sn" {
-  name    = "fortilab1-2-subnet"
+  name    = "fortinet-2sn1"
   project = var.gcpProject
 }
 
@@ -81,34 +81,34 @@ data "google_compute_subnetwork" "fg1-2-sn" {
 
 # Ubuntu System
 
-data "google_compute_image" "fortilab1-ubuntu" {
-  name  = "Ubuntu-1"
+data "google_compute_image" "ubuntu1" {
+  name  = "fortilab1-ubuntu"
   project = var.gcpProject
 }
 
-resource "google_compute_disk" "fortilab1-ubuntu-disk" {
-  name = "Ubuntu-1-disk"
+resource "google_compute_disk" "ubuntu1-disk" {
+  name = "fortilab1-ubuntu-disk"
   description = "OS disk made from image"
-  image = data.google_compute_image.fortilab1-ubuntu.self_link
+  image = data.google_compute_image.ubuntu1.self_link
   zone = var.gcpZone
 }
 
 resource "google_compute_address" "ubuntu-1-ip" {
-  name = "ubuntu-1-${var.customerName}-ip"
+  name = "ubuntu-1-ip"
   address_type = "EXTERNAL"
 }
 
 resource "google_compute_instance" "Ubuntu_vm" {
   project      = var.gcpProject
-  name         = "Ubuntu-1-${var.customerName}"
+  name         = "fortilab-Ubuntu-1"
   machine_type = "e2-medium"
   zone         = var.gcpZone
   boot_disk {
-    source     = google_compute_disk.fortilab1-ubuntu-disk.self_link
+    source     = google_compute_disk.ubuntu1-disk.self_link
   }
   network_interface {
-    network    = data.google_compute_network.fortilab1-vpc.self_link
-    subnetwork = data.google_compute_subnetwork.fortilab1-vpc-subnet.self_link
+    network    = data.google_compute_network.fg1-1-net.self_link
+    subnetwork = data.google_compute_subnetwork.fg1-1-net-subnet.self_link
     access_config {
       nat_ip = google_compute_address.ubuntu-1-ip.address
     }
@@ -119,15 +119,15 @@ resource "google_compute_instance" "Ubuntu_vm" {
 
 # FortiGate
 
-data "google_compute_image" "fortinet-ngfw" {
-  name    = "fortigatevm"
+data "google_compute_image" "fg-ngfw" {
+  name    = "fortinet-ngfw"
   project = var.gcpProject
 }
 
 resource "google_compute_disk" "fgvm-1-disk" {
   name = "fgvm-1-disk"
   description = "OS disk made from image"
-  image = data.google_compute_image.kali_image.self_link
+  image = data.google_compute_image.fg-ngfw.self_link
   zone = var.gcpZone
 }
 
@@ -136,20 +136,44 @@ resource "google_compute_address" "fgvm-1-ip" {
   address_type = "EXTERNAL"
 }
 
+resource "google_compute_address" "fgvm-2-ip" {
+  name = "ext-fgvm-2-ip"
+  address_type = "EXTERNAL"
+}
+
+resource "google_compute_address" "fgvm-3-ip" {
+  name = "ext-fgvm-3-ip"
+  address_type = "EXTERNAL"
+}
+
+
 resource "google_compute_instance" "fgvm-1" {
   project      = var.gcpProject
-  name         = "edr-kali-${var.customerName}"
-  machine_type = "e2-highcpu-2"
+  name         = "FG-test1"
+  machine_type = "e2-standard-4"
   zone         = var.gcpZone
   boot_disk {
-    source     = google_compute_disk.kali-disk.self_link
+    source     = google_compute_disk.fgvm-1-disk.self_link
   }
   network_interface {
-    network    = data.google_compute_network.edr-vpc.self_link
-    subnetwork = data.google_compute_subnetwork.edr-vpc-subnet.self_link
+    network    = data.google_compute_network.default.self_link
+    subnetwork = data.google_compute_subnetwork.us-central1.self_link
     access_config {
-      nat_ip = google_compute_address.kali-ip.address
+      nat_ip = google_compute_address.fgvm-1-ip.address
     }
+  network_interface {
+    network    = data.google_compute_network.fg1-1-net.self_link
+    subnetwork = data.google_compute_subnetwork.fg1-1-sn.self_link
+    access_config {
+      nat_ip = google_compute_address.fgvm-2-ip.address
+    }
+  network_interface {
+    network    = data.google_compute_network.fg1-2-net.self_link
+    subnetwork = data.google_compute_subnetwork.fg1-2-sn.self_link
+    access_config {
+      nat_ip = google_compute_address.fgvm-3-ip.address
+    }
+
   }
   labels = local.fg1Labels
   tags  = local.netTags
