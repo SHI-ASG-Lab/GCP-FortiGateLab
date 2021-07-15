@@ -31,7 +31,7 @@ variable "gcpZone" {
 variable "win10Count" {                 ###winserver
   type = number
 }
-variable "customerName" {
+variable "customerNum" {
   type = string
 }
 
@@ -47,76 +47,96 @@ locals {
 
 ## Resources ##
 
-# Network
+# Networks
 
-data "google_compute_network" "fortilab1-vpc" {
-  name    = "fortilab1-net"
+
+data "google_compute_network" "default" {
+  name    = "default"
   project = var.gcpProject
 }
-data "google_compute_subnetwork" "fortilab1-vpc-subnet" {
-  name    = "fortilab1-subnet"
+data "google_compute_subnetwork" "us-central1" {
+  name    = "us-central1"
   project = var.gcpProject
 }
+
+data "google_compute_network" "fg1-1-net" {
+  name    = "fortilab1-1-net"
+  project = var.gcpProject
+}
+data "google_compute_subnetwork" "fg1-1-sn" {
+  name    = "fortilab1-1-subnet"
+  project = var.gcpProject
+}
+
+data "google_compute_network" "fg1-2-net" {
+  name    = "fortilab1-2-net"
+  project = var.gcpProject
+}
+data "google_compute_subnetwork" "fg1-2-sn" {
+  name    = "fortilab1-2-subnet"
+  project = var.gcpProject
+}
+
+
 
 # Ubuntu System
 
-data "google_compute_image" "fortilabUbuntu-image" {
-  name  = "Ubuntu100-1"
+data "google_compute_image" "fortilab1-ubuntu" {
+  name  = "Ubuntu-1"
   project = var.gcpProject
 }
 
-resource "google_compute_disk" "fortilabUbuntu-disk" {
-  name = "Ubuntu100-1-disk"
+resource "google_compute_disk" "fortilab1-ubuntu-disk" {
+  name = "Ubuntu-1-disk"
   description = "OS disk made from image"
-  image = data.google_compute_image.fortilabUbuntu-image.self_link
+  image = data.google_compute_image.fortilab1-ubuntu.self_link
   zone = var.gcpZone
 }
 
-resource "google_compute_address" "ubuntu1001-ip" {
-  name = "ubuntu1001-${var.customerName}-ip"
+resource "google_compute_address" "ubuntu-1-ip" {
+  name = "ubuntu-1-${var.customerName}-ip"
   address_type = "EXTERNAL"
 }
 
 resource "google_compute_instance" "Ubuntu_vm" {
   project      = var.gcpProject
-  name         = "Ubuntu100-1-${var.customerName}"
+  name         = "Ubuntu-1-${var.customerName}"
   machine_type = "e2-medium"
   zone         = var.gcpZone
   boot_disk {
-    source     = google_compute_disk.Ubuntu100-1-disk.self_link
+    source     = google_compute_disk.fortilab1-ubuntu-disk.self_link
   }
   network_interface {
     network    = data.google_compute_network.fortilab1-vpc.self_link
     subnetwork = data.google_compute_subnetwork.fortilab1-vpc-subnet.self_link
     access_config {
-      nat_ip = google_compute_address.ubuntu1001-ip.address
+      nat_ip = google_compute_address.ubuntu-1-ip.address
     }
   }
   labels = local.fg1Labels
   tags  = local.netTags
 }
 
-/*
 # FortiGate
 
-data "google_compute_image" "kali_image" {
-  name    = "kali"
+data "google_compute_image" "fortinet-ngfw" {
+  name    = "fortigatevm"
   project = var.gcpProject
 }
 
-resource "google_compute_disk" "kali-disk" {
-  name = "kali-disk"
+resource "google_compute_disk" "fgvm-1-disk" {
+  name = "fgvm-1-disk"
   description = "OS disk made from image"
   image = data.google_compute_image.kali_image.self_link
   zone = var.gcpZone
 }
 
-resource "google_compute_address" "kali-ip" {
-  name = "external-kali-${var.customerName}-ip"
+resource "google_compute_address" "fgvm-1-ip" {
+  name = "ext-fgvm-1-ip"
   address_type = "EXTERNAL"
 }
 
-resource "google_compute_instance" "kali_vm" {
+resource "google_compute_instance" "fgvm-1" {
   project      = var.gcpProject
   name         = "edr-kali-${var.customerName}"
   machine_type = "e2-highcpu-2"
@@ -134,7 +154,7 @@ resource "google_compute_instance" "kali_vm" {
   labels = local.fg1Labels
   tags  = local.netTags
 }
-
+/*
 # Windows System(s)
 
 module "winvic" {
