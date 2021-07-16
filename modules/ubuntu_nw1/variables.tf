@@ -23,7 +23,7 @@ variable "ub1Name" {
 variable "disk1Name" {
   type = string
 }
-
+/*
 variable "network1" {
   type = string
 }
@@ -31,3 +31,4 @@ variable "network1" {
 variable "subnetwork1" {
   type = string
 }
+*/
