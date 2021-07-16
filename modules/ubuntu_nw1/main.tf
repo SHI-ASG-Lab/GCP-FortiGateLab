@@ -19,7 +19,7 @@ resource "google_compute_address" "ubuntu-1-ip" {
 
 resource "google_compute_instance" "Ubuntu_vm" {
   project      = var.gcpProject
-  name         = "fortilab-ubuntu-1"
+  name         = var.ub1Name
   machine_type = "e2-medium"
   zone         = var.gcpZone
   boot_disk {
