@@ -16,11 +16,11 @@ variable "tags" {
   type = set(string)
 }
 
-variable "victimName" {
+variable "ub2Name" {
   type = string
 }
 
-variable "diskName" {
+variable "disk2Name" {
   type = string
 }
 
