@@ -8,11 +8,11 @@ variable "gcpZone" {
   type = string
 }
 
-variable "fg1Labels" {
+variable "labels" {
   type = map(string)
 }
 
-variable "netTags" {
+variable "tags" {
   type = set(string)
 }
 
