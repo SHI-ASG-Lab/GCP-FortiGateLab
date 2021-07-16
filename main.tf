@@ -53,7 +53,6 @@ locals {
 data "google_compute_network" "default" {
   name    = "default"
   project = var.gcpProject
-  auto_create_subnetworks = false
 }
 data "google_compute_subnetwork" "us-central1" {
   name    = "us-central1"
@@ -63,17 +62,15 @@ data "google_compute_subnetwork" "us-central1" {
 data "google_compute_network" "fg1-1-net" {
   name    = "fortinet-nw1"
   project = var.gcpProject
-  auto_create_subnetworks = false
 }
 data "google_compute_subnetwork" "fg1-1-sn" {
-  name    = "fortinet-1sn1"
+  name    = "fortinet-sn1"
   project = var.gcpProject
 }
 
 data "google_compute_network" "fg1-2-net" {
   name    = "fortinet-nw2"
   project = var.gcpProject
-  auto_create_subnetworks = false
 }
 data "google_compute_subnetwork" "fg1-2-sn" {
   name    = "fortinet-2sn1"
