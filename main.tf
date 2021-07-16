@@ -184,7 +184,7 @@ resource "google_compute_instance" "fgvm-1" {
 # Ubuntu System(s)
 
 module "ubuntu_nw1" {
-  source = "./modules/ubuntu"
+  source = "./modules/ubuntu_nw1"
   count  = var.ubnw1Count
 
   gcpProject = var.gcpProject
@@ -193,15 +193,15 @@ module "ubuntu_nw1" {
   labels = local.fg1Labels
   tags  = local.netTags
 
-  victimName = "fortilab-${var.customerAbv}-ubuntu-${count.index}"
-  diskName = "fortilab-${var.customerAbv}-ubuntu-${count.index}-disk"
+  ub1Name = "fortilab-${var.customerAbv}-ubuntu-${count.index}"
+  disk1Name = "fortilab-${var.customerAbv}-ubuntu-${count.index}-disk"
 
-  network    = data.google_compute_network.fg1-1-net.self_link
-  subnetwork = data.google_compute_subnetwork.fg1-1-sn.self_link
+  network1    = data.google_compute_network.fg1-1-net.self_link
+  subnetwork1 = data.google_compute_subnetwork.fg1-1-sn.self_link
 }
 
 module "ubuntu_nw2" {
-  source = "./modules/ubuntu"
+  source = "./modules/ubuntu_nw2"
   count  = var.ubnw2Count
 
   gcpProject = var.gcpProject
@@ -210,9 +210,9 @@ module "ubuntu_nw2" {
   labels = local.fg1Labels
   tags  = local.netTags
 
-  victimName = "fortilab-${var.customerAbv}-ubuntu-${count.index}"
-  diskName = "fortilab-${var.customerAbv}-ubuntu-${count.index}-disk"
+  ub2Name = "fortilab-${var.customerAbv}-ubuntu-${count.index}"
+  disk2Name = "fortilab-${var.customerAbv}-ubuntu-${count.index}-disk"
 
-  network    = data.google_compute_network.fg1-2-net.self_link
-  subnetwork = data.google_compute_subnetwork.fg1-2-sn.self_link
+  network2    = data.google_compute_network.fg1-2-net.self_link
+  subnetwork2 = data.google_compute_subnetwork.fg1-2-sn.self_link
 }
