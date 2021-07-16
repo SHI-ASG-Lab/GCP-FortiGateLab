@@ -1,18 +1,18 @@
 # Creating (#?) of Ubuntu VMs based on image.
 
 data "google_compute_image" "ubuntu1" {
-  name  = var.disk1Name
+  name  = "fortilab1-ubuntu"
   project = var.gcpProject
 }
 
 resource "google_compute_disk" "ubuntu1-disk" {
-  name = "fortilab1-ubuntu-disk"
+  name = var.disk1Name
   image = data.google_compute_image.ubuntu1.self_link
   zone = var.gcpZone
 }
 
 resource "google_compute_address" "ubuntu-1-ip" {
-  name = "ubuntu-1-ip"
+  name = "${var.ub1name}-ip"
   address_type = "EXTERNAL"
 }
 
