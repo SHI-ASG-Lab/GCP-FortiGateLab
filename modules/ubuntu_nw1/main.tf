@@ -31,6 +31,6 @@ resource "google_compute_instance" "Ubuntu_vm" {
       nat_ip = google_compute_address.ubuntu-1-ip.address
     }
   }
-  labels = var.fg1Labels
-  tags  = var.netTags
+  labels = var.labels
+  tags  = var.tags
 }
