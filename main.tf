@@ -160,20 +160,21 @@ resource "google_compute_instance" "fgvm-1" {
     subnetwork = data.google_compute_subnetwork.us-central1.self_link
     access_config {
       nat_ip = google_compute_address.fgvm-1-ip.address
-    }
+    }  
+  }
   network_interface {
     network    = data.google_compute_network.fg1-1-net.self_link
     subnetwork = data.google_compute_subnetwork.fg1-1-sn.self_link
     access_config {
       nat_ip = google_compute_address.fgvm-2-ip.address
     }
+  }
   network_interface {
     network    = data.google_compute_network.fg1-2-net.self_link
     subnetwork = data.google_compute_subnetwork.fg1-2-sn.self_link
     access_config {
       nat_ip = google_compute_address.fgvm-3-ip.address
     }
-
   }
   labels = local.fg1Labels
   tags  = local.netTags
