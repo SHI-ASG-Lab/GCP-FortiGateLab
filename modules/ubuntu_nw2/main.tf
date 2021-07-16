@@ -25,8 +25,8 @@ resource "google_compute_instance" "Ubuntu_vm" {
     source     = google_compute_disk.ubuntu1-disk.self_link
   }
   network_interface {
-    network2    = var.network2
-    subnetwork2 = var.subnetwork2
+    network    = var.network2
+    subnetwork = var.subnetwork2
     access_config {
       nat_ip = google_compute_address.ubuntu-2-ip.address
     }
