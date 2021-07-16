@@ -28,12 +28,15 @@ variable "gcpProject" {
 variable "gcpZone" {
   type = string
 }
-/*variable "winvmCount" {                 ###winserver
+variable "ubnw1Count" {
+  type = number
+}
+variable "ubnw2Count" {
   type = number
 }
 variable "customerAbv" {
   type = string
-}*/
+}
 
 # Locals
 
@@ -77,10 +80,8 @@ data "google_compute_subnetwork" "fg1-2-sn" {
   project = var.gcpProject
 }
 
-
-
 # Ubuntu System
-
+/*
 data "google_compute_image" "ubuntu1" {
   name  = "fortilab1-ubuntu"
   project = var.gcpProject
@@ -116,7 +117,7 @@ resource "google_compute_instance" "Ubuntu_vm" {
   labels = local.fg1Labels
   tags  = local.netTags
 }
-
+*/
 # FortiGate
 
 data "google_compute_image" "fg-ngfw" {
@@ -179,12 +180,12 @@ resource "google_compute_instance" "fgvm-1" {
   labels = local.fg1Labels
   tags  = local.netTags
 }
-/*
-# Windows System(s)
 
-module "winvic" {
-  source = "./modules/winvic"
-  count  = var.win10Count
+# Ubuntu System(s)
+
+module "ubuntu_nw1" {
+  source = "./modules/ubuntu"
+  count  = var.ubnw1Count
 
   gcpProject = var.gcpProject
   gcpZone = var.gcpZone
@@ -192,10 +193,26 @@ module "winvic" {
   labels = local.fg1Labels
   tags  = local.netTags
 
-  victimName = "edr-victim-${count.index}-${var.customerName}"
-  diskName = "edr-victim-disk-${count.index}-${var.customerName}"
+  victimName = "fortilab-${var.customerAbv}-ubuntu-${count.index}"
+  diskName = "fortilab-${var.customerAbv}-ubuntu-${count.index}-disk"
 
-  network    = data.google_compute_network.edr-vpc.self_link
-  subnetwork = data.google_compute_subnetwork.edr-vpc-subnet.self_link
+  network    = data.google_compute_network.fg1-1-net.self_link
+  subnetwork = data.google_compute_subnetwork.fg1-1-sn.self_link
 }
-*/
+
+module "ubuntu_nw2" {
+  source = "./modules/ubuntu"
+  count  = var.ubnw2Count
+
+  gcpProject = var.gcpProject
+  gcpZone = var.gcpZone
+
+  labels = local.fg1Labels
+  tags  = local.netTags
+
+  victimName = "fortilab-${var.customerAbv}-ubuntu-${count.index}"
+  diskName = "fortilab-${var.customerAbv}-ubuntu-${count.index}-disk"
+
+  network    = data.google_compute_network.fg1-2-net.self_link
+  subnetwork = data.google_compute_subnetwork.fg1-2-sn.self_link
+}
