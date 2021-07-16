@@ -198,7 +198,7 @@ module "ubuntu_nw2" {
   labels = local.fg1Labels
   tags  = local.netTags
 
-  ub1Name = "fortilab-${var.customerAbv}-WinSrv1-${count.index}"
+  win1Name = "fortilab-${var.customerAbv}-WinSrv1-${count.index}"
   disk1Name = "fortilab-${var.customerAbv}-WinSrv1-${count.index}-disk"
 
   network1    = data.google_compute_network.fg1-1-net.self_link
@@ -215,7 +215,7 @@ module "ubuntu_nw2" {
   labels = local.fg1Labels
   tags  = local.netTags
 
-  ub2Name = "fortilab-${var.customerAbv}-WinSrv2-${count.index}"
+  win2Name = "fortilab-${var.customerAbv}-WinSrv2-${count.index}"
   disk2Name = "fortilab-${var.customerAbv}-WinSrv2-${count.index}-disk"
 
   network2    = data.google_compute_network.fg1-2-net.self_link
