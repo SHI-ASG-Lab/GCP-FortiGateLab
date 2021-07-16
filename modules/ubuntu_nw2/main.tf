@@ -6,13 +6,13 @@ data "google_compute_image" "ubuntu2" {
 }
 
 resource "google_compute_disk" "ubuntu1-disk" {
-  name = var.disk1Name
+  name = var.disk2Name
   image = data.google_compute_image.ubuntu2.self_link
   zone = var.gcpZone
 }
 
 resource "google_compute_address" "ubuntu-2-ip" {
-  name = "ubuntu-2-ip"
+  name = "${var.ub2Name}-ip"
   address_type = "EXTERNAL"
 }
 
