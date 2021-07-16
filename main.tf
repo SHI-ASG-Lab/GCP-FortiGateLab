@@ -100,7 +100,7 @@ resource "google_compute_address" "ubuntu-1-ip" {
 
 resource "google_compute_instance" "Ubuntu_vm" {
   project      = var.gcpProject
-  name         = "fortilab-Ubuntu-1"
+  name         = "fortilab-ubuntu-1"
   machine_type = "e2-medium"
   zone         = var.gcpZone
   boot_disk {
@@ -149,7 +149,7 @@ resource "google_compute_address" "fgvm-3-ip" {
 
 resource "google_compute_instance" "fgvm-1" {
   project      = var.gcpProject
-  name         = "FG-test1"
+  name         = "fg-test1"
   machine_type = "e2-standard-4"
   zone         = var.gcpZone
   boot_disk {
