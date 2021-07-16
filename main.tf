@@ -150,7 +150,7 @@ resource "google_compute_address" "fgvm-3-ip" {
 
 resource "google_compute_instance" "fgvm-1" {
   project      = var.gcpProject
-  name         = "fg-test1"
+  name         = "fg-test2"
   machine_type = "e2-standard-4"
   zone         = var.gcpZone
   boot_disk {
