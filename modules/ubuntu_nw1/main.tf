@@ -12,7 +12,7 @@ resource "google_compute_disk" "ubuntu1-disk" {
 }
 
 resource "google_compute_address" "ubuntu-1-ip" {
-  name = "${var.ub1name}-ip"
+  name = "${var.ub1Name}-ip"
   address_type = "EXTERNAL"
 }
 
