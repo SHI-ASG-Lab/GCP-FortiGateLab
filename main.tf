@@ -108,7 +108,7 @@ resource "google_compute_instance" "Ubuntu_vm" {
   }
   network_interface {
     network    = data.google_compute_network.fg1-1-net.self_link
-    subnetwork = data.google_compute_subnetwork.fg1-1-net-subnet.self_link
+    subnetwork = data.google_compute_subnetwork.fg1-1-sn.self_link
     access_config {
       nat_ip = google_compute_address.ubuntu-1-ip.address
     }
