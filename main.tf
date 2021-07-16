@@ -33,6 +33,7 @@ variable "ubnw1Count" {
 }
 variable "ubnw2Count" {
   type = number
+}
 variable "win1Count" {
   type = number
 }
