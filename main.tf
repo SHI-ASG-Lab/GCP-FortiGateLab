@@ -43,6 +43,18 @@ variable "win2Count" {
 variable "customerAbv" {
   type = string
 }
+variable "subnet_cidr1" {
+  type = string
+}
+variable "subnet_cidr2" {
+  type = string
+}
+variable "fgint1" {
+  type = string
+}
+variable "fgint2" {
+  type = string
+}
 
 
 # Locals
@@ -64,11 +76,11 @@ data "google_compute_network" "default" {
   name    = "default"
   project = var.gcpProject
 }
-data "google_compute_subnetwork" "us-central1" {
-  name    = "us-central1"
+data "google_compute_subnetwork" "default" {
+  name    = "default"
   project = var.gcpProject
 }
-
+/*
 data "google_compute_network" "fg1-1-net" {
   name    = "fortinet-nw1"
   project = var.gcpProject
@@ -86,7 +98,32 @@ data "google_compute_subnetwork" "fg1-2-sn" {
   name    = "fortinet-2sn1"
   project = var.gcpProject
 }
+*/
+  
+module "create_vpcs" {
+  source = "./modules/create_vpcs"
+  
+  gcpProject = var.gcpProject
+  gcpZone = var.gcpZone
 
+  labels = local.fg1Labels
+  tags  = local.netTags
+
+  subnet_cidr1 = 
+  subnet_cidr2 =
+  fgint1 =
+  fgint2 = 
+  
+  ub1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index}"
+  disk1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index}-disk"
+
+  network1    = data.google_compute_network.fg1-1-net.self_link
+  subnetwork1 = data.google_compute_subnetwork.fg1-1-sn.self_link
+}
+
+  
+  
+  
 # FortiGate
 
 data "google_compute_image" "fg-ngfw" {
@@ -119,7 +156,7 @@ resource "google_compute_address" "fgvm-3-ip" {
 
 resource "google_compute_instance" "fgvm-1" {
   project      = var.gcpProject
-  name         = "fg-test2"
+  name         = "fg-test3"
   machine_type = "e2-standard-4"
   zone         = var.gcpZone
   boot_disk {
@@ -127,7 +164,7 @@ resource "google_compute_instance" "fgvm-1" {
   }
   network_interface {
     network    = data.google_compute_network.default.self_link
-    subnetwork = data.google_compute_subnetwork.us-central1.self_link
+    subnetwork = data.google_compute_subnetwork.default.self_link
     access_config {
       nat_ip = google_compute_address.fgvm-1-ip.address
     }  
@@ -135,6 +172,7 @@ resource "google_compute_instance" "fgvm-1" {
   network_interface {
     network    = data.google_compute_network.fg1-1-net.self_link
     subnetwork = data.google_compute_subnetwork.fg1-1-sn.self_link
+    network_ip = var.fgint1
     access_config {
       nat_ip = google_compute_address.fgvm-2-ip.address
     }
@@ -142,6 +180,7 @@ resource "google_compute_instance" "fgvm-1" {
   network_interface {
     network    = data.google_compute_network.fg1-2-net.self_link
     subnetwork = data.google_compute_subnetwork.fg1-2-sn.self_link
+    network_ip = var.fgint2
     access_config {
       nat_ip = google_compute_address.fgvm-3-ip.address
     }
