@@ -28,18 +28,6 @@ variable "gcpProject" {
 variable "gcpZone" {
   type = string
 }
-variable "ubnw1Count" {
-  type = number
-}
-variable "ubnw2Count" {
-  type = number
-}
-variable "win1Count" {
-  type = number
-}
-variable "win2Count" {
-  type = number
-}
 variable "customerAbv" {
   type = string
 }
@@ -71,6 +59,23 @@ locals {
 
 # Networks
 
+module "create_vpcs" {
+  source = "./modules/create_vpcs"
+  
+  gcpProject = var.gcpProject
+  gcpZone = var.gcpZone
+
+  labels = local.fg1Labels
+  tags  = local.netTags
+
+  subnet_cidr1 = var.subnet_cidr1
+  subnet_cidr2 = var.subnet_cidr2
+  fgint1 = var.fgint1
+  fgint2 = var.fgint1
+ 
+}
+
+  
 
 data "google_compute_network" "default" {
   name    = "default"
@@ -99,28 +104,6 @@ data "google_compute_subnetwork" "fg1-2-sn" {
   project = var.gcpProject
 }
 */
-  
-module "create_vpcs" {
-  source = "./modules/create_vpcs"
-  
-  gcpProject = var.gcpProject
-  gcpZone = var.gcpZone
-
-  labels = local.fg1Labels
-  tags  = local.netTags
-
-  subnet_cidr1 = 
-  subnet_cidr2 =
-  fgint1 =
-  fgint2 = 
-  
-  ub1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index}"
-  disk1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index}-disk"
-
-  network1    = data.google_compute_network.fg1-1-net.self_link
-  subnetwork1 = data.google_compute_subnetwork.fg1-1-sn.self_link
-}
-
   
   
   
@@ -187,76 +170,4 @@ resource "google_compute_instance" "fgvm-1" {
   }
   labels = local.fg1Labels
   tags  = local.netTags
-}
-
-# Ubuntu System(s)
-
-module "ubuntu_nw1" {
-  source = "./modules/ubuntu_nw1"
-  count  = var.ubnw1Count
-
-  gcpProject = var.gcpProject
-  gcpZone = var.gcpZone
-
-  labels = local.fg1Labels
-  tags  = local.netTags
-
-  ub1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index}"
-  disk1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index}-disk"
-
-  network1    = data.google_compute_network.fg1-1-net.self_link
-  subnetwork1 = data.google_compute_subnetwork.fg1-1-sn.self_link
-}
-
-module "ubuntu_nw2" {
-  source = "./modules/ubuntu_nw2"
-  count  = var.ubnw2Count
-
-  gcpProject = var.gcpProject
-  gcpZone = var.gcpZone
-
-  labels = local.fg1Labels
-  tags  = local.netTags
-
-  ub2Name = "fortilab-${var.customerAbv}-ubuntu2-${count.index}"
-  disk2Name = "fortilab-${var.customerAbv}-ubuntu2-${count.index}-disk"
-
-  network2    = data.google_compute_network.fg1-2-net.self_link
-  subnetwork2 = data.google_compute_subnetwork.fg1-2-sn.self_link
-}
-
-# Windows Systems(s)  
-  
-  module "winsrv1" {
-  source = "./modules/winsrv1"
-  count  = var.win1Count
-
-  gcpProject = var.gcpProject
-  gcpZone = var.gcpZone
-
-  labels = local.fg1Labels
-  tags  = local.netTags
-
-  win1Name = "fortilab-${var.customerAbv}-winsrv1-${count.index}"
-  disk1Name = "fortilab-${var.customerAbv}-winsrv1-${count.index}-disk"
-
-  network1    = data.google_compute_network.fg1-1-net.self_link
-  subnetwork1 = data.google_compute_subnetwork.fg1-1-sn.self_link
-}
-    
-  module "winsrv2" {
-  source = "./modules/winsrv2"
-  count  = var.win2Count
-
-  gcpProject = var.gcpProject
-  gcpZone = var.gcpZone
-
-  labels = local.fg1Labels
-  tags  = local.netTags
-
-  win2Name = "fortilab-${var.customerAbv}-winsrv2-${count.index}"
-  disk2Name = "fortilab-${var.customerAbv}-winsrv2-${count.index}-disk"
-
-  network2    = data.google_compute_network.fg1-2-net.self_link
-  subnetwork2 = data.google_compute_subnetwork.fg1-2-sn.self_link
 }
