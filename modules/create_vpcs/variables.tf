@@ -40,6 +40,10 @@ variable "fgint2" {
   type = string
 }
 
+variable "customerAbv" {
+  type = string
+}
+
 variable "projectName" {
   type = string
 }
