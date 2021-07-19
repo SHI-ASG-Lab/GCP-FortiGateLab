@@ -43,7 +43,9 @@ variable "fgint1" {
 variable "fgint2" {
   type = string
 }
-
+variable "projectName" {
+  type = string
+}
 
 # Locals
 
