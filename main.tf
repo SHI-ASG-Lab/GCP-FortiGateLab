@@ -72,7 +72,7 @@ module "create_vpcs" {
   fgint1 = var.fgint1
   fgint2 = var.fgint1
   customerAbv = var.customerAbv
-  projectName = "lab-fg1-${customerAbv}"
+  projectName = "lab-fg1"
  }
 
   
