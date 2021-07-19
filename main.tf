@@ -72,10 +72,9 @@ module "create_vpcs" {
   fgint1 = var.fgint1
   fgint2 = var.fgint1
   customerAbv = var.customerAbv
-  projectName = "lab-fg1"
- }
+  projectName = "lab-fg1-{$customerAbv}"
+}
 
-  
 
 data "google_compute_network" "default" {
   name    = "default"
