@@ -74,7 +74,7 @@ module "create_vpcs" {
   subnet_cidr2 = var.subnet_cidr2
   fgint1 = var.fgint1
   fgint2 = var.fgint1
-  projectName = "lab-fg1-${customerAbv}"
+  projectName = var.projectName
  }
 
   
