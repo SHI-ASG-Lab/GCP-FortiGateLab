@@ -4,6 +4,10 @@ resource "google_compute_network" "vpc1" {
  auto_create_subnetworks = false
 }
 
+output "nw1" {
+ value = module.create_vpcs.vpc1.self_link
+}
+
 # Create Subnet for Network1
 resource "google_compute_subnetwork" "subn1" {
  name          = "${var.projectName}-1-sn"
@@ -12,10 +16,18 @@ resource "google_compute_subnetwork" "subn1" {
  region        = var.gcpZone                                          ####var
 }
 
-# Create VPC for Network2
+ output "sn1" {
+ value = module.create_vpcs.vpc1.self_link
+}
+
+  # Create VPC for Network2
 resource "google_compute_network" "vpc2" {
  name                    = "${var.projectName}-2-net"                                          ####var
  auto_create_subnetworks = false
+}
+
+output "nw2" {
+ value = module.create_vpcs.vpc1.self_link
 }
 
 # Create Subnet for Network2
@@ -26,7 +38,9 @@ resource "google_compute_subnetwork" "subn2" {
  region        = var.gcpZone                                          ####var
 }
 
-
+ output "sn1" {
+ value = module.create_vpcs.vpc1.self_link
+}
 
 # VPC1 firewall configuration
 resource "google_compute_firewall" "firewall1" {
