@@ -5,7 +5,7 @@ resource "google_compute_network" "vpc1" {
 }
 
 output "nw1" {
- value = vpc1.name.self_link
+ value = vpc1.self_link
 }
 
 # Create Subnet for Network1
@@ -17,7 +17,7 @@ resource "google_compute_subnetwork" "subn1" {
 }
 
  output "sn1" {
- value = subn1.name.self_link
+ value = subn1.self_link
 }
 
   # Create VPC for Network2
@@ -27,7 +27,7 @@ resource "google_compute_network" "vpc2" {
 }
 
 output "nw2" {
- value = vpc2.name.self_link
+ value = vpc2.self_link
 }
 
 # Create Subnet for Network2
@@ -39,7 +39,7 @@ resource "google_compute_subnetwork" "subn2" {
 }
 
  output "sn2" {
- value = subn2.name.self_link
+ value = subn2.self_link
 }
 
 # VPC1 firewall configuration
