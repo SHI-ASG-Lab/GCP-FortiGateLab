@@ -38,7 +38,7 @@ resource "google_compute_subnetwork" "subn2" {
  region        = var.gcpZone                                          ####var
 }
 
- output "sn1" {
+ output "sn2" {
  value = module.create_vpcs.vpc1.self_link
 }
 
