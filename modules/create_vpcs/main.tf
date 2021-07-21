@@ -5,7 +5,7 @@ resource "google_compute_network" "vpc1" {
 }
 
 output "nw1" {
- value = vpc1.self_link
+ value = google_compute_network.vpc1.self_link
 }
 
 # Create Subnet for Network1
@@ -17,7 +17,7 @@ resource "google_compute_subnetwork" "subn1" {
 }
 
  output "sn1" {
- value = subn1.self_link
+ value = google_compute_subnetwork.subn1.self_link
 }
 
   # Create VPC for Network2
@@ -27,7 +27,7 @@ resource "google_compute_network" "vpc2" {
 }
 
 output "nw2" {
- value = vpc2.self_link
+ value = google_compute_network.vpc2.self_link
 }
 
 # Create Subnet for Network2
@@ -39,7 +39,7 @@ resource "google_compute_subnetwork" "subn2" {
 }
 
  output "sn2" {
- value = subn2.self_link
+ value = google_compute_subnetwork.subn2.self_link
 }
 
 # VPC1 firewall configuration
@@ -102,7 +102,7 @@ resource "google_compute_firewall" "firewall2" {
 
 #Routes
 resource "google_compute_route" "fgnw1to2" {
-  name        = "${projectName}-fgnw1to2"
+  name        = "${var.projectName}-fgnw1to2"
   dest_range  = var.subnet_cidr2                                          ####var
   network     = google_compute_network.vpc1.self_link #data.google_compute_network.vpc1.self_link
   next_hop_ip = var.fgint1                                          ####var
@@ -110,7 +110,7 @@ resource "google_compute_route" "fgnw1to2" {
 }
 
 resource "google_compute_route" "fgnw2to1" {
-  name        = "${projectName}-fgnw2to1"
+  name        = "${var.projectName}-fgnw2to1"
   dest_range  = var.subnet_cidr1                                          ####var
   network     = google_compute_network.vpc2.self_link #data.google_compute_network.vpc2.self_link
   next_hop_ip = var.fgint2                                          ####var
