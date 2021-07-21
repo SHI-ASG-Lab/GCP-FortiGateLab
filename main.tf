@@ -154,16 +154,16 @@ resource "google_compute_instance" "fgvm-1" {
     }  
   }
   network_interface {
-    network    = module.create_vpcs.nw1.self_link #data.google_compute_network.fg1-1-net.self_link
-    subnetwork = module.create_vpcs.sn1.self_link #data.google_compute_subnetwork.fg1-1-sn.self_link
+    network    = module.create_vpcs.nw1
+    subnetwork = module.create_vpcs.sn1
     network_ip = var.fgint1
     access_config {
       nat_ip = google_compute_address.fgvm-2-ip.address
     }
   }
   network_interface {
-    network    = module.create_vpcs.nw2.self_link #data.google_compute_network.fg1-2-net.self_link
-    subnetwork = module.create_vpcs.sn2.self_link #data.google_compute_subnetwork.fg1-2-sn.self_link
+    network    = module.create_vpcs.nw2
+    subnetwork = module.create_vpcs.sn2
     network_ip = var.fgint2
     access_config {
       nat_ip = google_compute_address.fgvm-3-ip.address
