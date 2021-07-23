@@ -10,13 +10,13 @@ terraform {
 
 provider "google" {
   project = var.gcpProject
-  region  = "us-central1"
+  region  = var.gcpRegion
   zone    = var.gcpZone
 }
 
 provider "google-beta" {
   project = var.gcpProject
-  region  = "us-central1"
+  region  = var.gcpRegion
   zone    = var.gcpZone
 }
 
@@ -25,25 +25,27 @@ provider "google-beta" {
 variable "gcpProject" {
   type = string
 }
-variable "gcpZone" {
+variable "gcpRegion" {
   type = string
 }
-variable "ubnw1Count" {
-  type = number
-}
-variable "ubnw2Count" {
-  type = number
-}
-variable "win1Count" {
-  type = number
-}
-variable "win2Count" {
-  type = number
+variable "gcpZone" {
+  type = string
 }
 variable "customerAbv" {
   type = string
 }
-
+variable "subnet_cidr1" {
+  type = number
+}
+variable "subnet_cidr2" {
+  type = number
+}
+variable "fgint1" {
+  type = number
+}
+variable "fgint2" {
+  type = number
+}
 
 # Locals
 
@@ -59,32 +61,31 @@ locals {
 
 # Networks
 
-
 data "google_compute_network" "default" {
   name    = "default"
   project = var.gcpProject
 }
-data "google_compute_subnetwork" "us-central1" {
-  name    = "us-central1"
+data "google_compute_subnetwork" "default" {
+  name    = "default"
   project = var.gcpProject
 }
 
-data "google_compute_network" "fg1-1-net" {
-  name    = "fortinet-nw1"
-  project = var.gcpProject
-}
-data "google_compute_subnetwork" "fg1-1-sn" {
-  name    = "fortinet-sn1"
-  project = var.gcpProject
-}
+module "create_vpcs" {
+  source = "./modules/create_vpcs"
 
-data "google_compute_network" "fg1-2-net" {
-  name    = "fortinet-nw2"
-  project = var.gcpProject
-}
-data "google_compute_subnetwork" "fg1-2-sn" {
-  name    = "fortinet-2sn1"
-  project = var.gcpProject
+  gcpProject = var.gcpProject
+  gcpRegion = var.gcpRegion
+  gcpZone = var.gcpZone
+
+  labels = local.fg1Labels
+  tags  = local.netTags
+
+  subnet_cidr1 = var.subnet_cidr1
+  subnet_cidr2 = var.subnet_cidr2
+  fgint1 = var.fgint1
+  fgint2 = var.fgint2
+  customerAbv = var.customerAbv
+  projectName = "fortilab-${var.customerAbv}"
 }
 
 # FortiGate
@@ -95,31 +96,31 @@ data "google_compute_image" "fg-ngfw" {
 }
 
 resource "google_compute_disk" "fgvm-1-disk" {
-  name = "fgvm-1-disk"
+  name = "fortilab-${var.customerAbv}-fgvm-1-disk"
   description = "OS disk made from image"
   image = data.google_compute_image.fg-ngfw.self_link
   zone = var.gcpZone
 }
 
 resource "google_compute_address" "fgvm-1-ip" {
-  name = "ext-fgvm-1-ip"
+  name = "fortilab-${var.customerAbv}-ext-fgvm-1-ip"
   address_type = "EXTERNAL"
 }
 
 resource "google_compute_address" "fgvm-2-ip" {
-  name = "ext-fgvm-2-ip"
+  name = "fortilab-${var.customerAbv}-ext-fgvm-2-ip"
   address_type = "EXTERNAL"
 }
 
 resource "google_compute_address" "fgvm-3-ip" {
-  name = "ext-fgvm-3-ip"
+  name = "fortilab-${var.customerAbv}-ext-fgvm-3-ip"
   address_type = "EXTERNAL"
 }
 
 
 resource "google_compute_instance" "fgvm-1" {
   project      = var.gcpProject
-  name         = "fg-test2"
+  name         = "fortilab-${var.customerAbv}-fortigate-vm"
   machine_type = "e2-standard-4"
   zone         = var.gcpZone
   boot_disk {
@@ -127,21 +128,23 @@ resource "google_compute_instance" "fgvm-1" {
   }
   network_interface {
     network    = data.google_compute_network.default.self_link
-    subnetwork = data.google_compute_subnetwork.us-central1.self_link
+    subnetwork = data.google_compute_subnetwork.default.self_link
     access_config {
       nat_ip = google_compute_address.fgvm-1-ip.address
     }  
   }
   network_interface {
-    network    = data.google_compute_network.fg1-1-net.self_link
-    subnetwork = data.google_compute_subnetwork.fg1-1-sn.self_link
+    network    = module.create_vpcs.nw1
+    subnetwork = module.create_vpcs.sn1
+    network_ip = var.fgint1
     access_config {
       nat_ip = google_compute_address.fgvm-2-ip.address
     }
   }
   network_interface {
-    network    = data.google_compute_network.fg1-2-net.self_link
-    subnetwork = data.google_compute_subnetwork.fg1-2-sn.self_link
+    network    = module.create_vpcs.nw2
+    subnetwork = module.create_vpcs.sn2
+    network_ip = var.fgint2
     access_config {
       nat_ip = google_compute_address.fgvm-3-ip.address
     }
@@ -165,8 +168,8 @@ module "ubuntu_nw1" {
   ub1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index}"
   disk1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index}-disk"
 
-  network1    = data.google_compute_network.fg1-1-net.self_link
-  subnetwork1 = data.google_compute_subnetwork.fg1-1-sn.self_link
+  network1    = module.create_vpcs.nw1
+  subnetwork1 = module.create_vpcs.sn1
 }
 
 module "ubuntu_nw2" {
@@ -182,8 +185,8 @@ module "ubuntu_nw2" {
   ub2Name = "fortilab-${var.customerAbv}-ubuntu2-${count.index}"
   disk2Name = "fortilab-${var.customerAbv}-ubuntu2-${count.index}-disk"
 
-  network2    = data.google_compute_network.fg1-2-net.self_link
-  subnetwork2 = data.google_compute_subnetwork.fg1-2-sn.self_link
+  network2    = module.create_vpcs.nw2
+  subnetwork2 = module.create_vpcs.sn2
 }
 
 # Windows Systems(s)  
@@ -201,8 +204,8 @@ module "ubuntu_nw2" {
   win1Name = "fortilab-${var.customerAbv}-winsrv1-${count.index}"
   disk1Name = "fortilab-${var.customerAbv}-winsrv1-${count.index}-disk"
 
-  network1    = data.google_compute_network.fg1-1-net.self_link
-  subnetwork1 = data.google_compute_subnetwork.fg1-1-sn.self_link
+  network1    = module.create_vpcs.nw1
+  subnetwork1 = module.create_vpcs.sn1
 }
     
   module "winsrv2" {
@@ -218,6 +221,6 @@ module "ubuntu_nw2" {
   win2Name = "fortilab-${var.customerAbv}-winsrv2-${count.index}"
   disk2Name = "fortilab-${var.customerAbv}-winsrv2-${count.index}-disk"
 
-  network2    = data.google_compute_network.fg1-2-net.self_link
-  subnetwork2 = data.google_compute_subnetwork.fg1-2-sn.self_link
+  network2    = module.create_vpcs.nw2
+  subnetwork2 = module.create_vpcs.sn2
 }
