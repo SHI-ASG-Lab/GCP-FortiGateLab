@@ -33,7 +33,7 @@ resource "google_compute_instance" "winsrv_vm" {
     network    = var.network2
     subnetwork = var.subnetwork2
     access_config {
-      nat_ip = google_compute_address.winsrv-2-ip.address
+      nat_ip = google_compute_address.winsrv-2-ip
     }
   }
   labels = var.labels
