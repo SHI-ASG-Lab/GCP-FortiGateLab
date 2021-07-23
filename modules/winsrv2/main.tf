@@ -21,6 +21,7 @@ resource "google_compute_instance" "winsrv_vm" {
   name         = var.win2Name
   machine_type = "e2-medium"
   zone         = var.gcpZone
+  allow_stopping_for_update = true
   boot_disk {
     source     = google_compute_disk.winsrv2-disk.self_link
   }
