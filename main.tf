@@ -169,7 +169,7 @@ resource "google_compute_instance" "fgvm-1" {
 
 module "ubuntu_nw1" {
   source = "./modules/ubuntu_nw1"
-  depends_on = [google_compute_address.fgvm-2-ip.address]
+  depends_on = [google_compute_address.fgvm-2-ip]
   count  = var.ubnw1Count
 
   gcpProject = var.gcpProject
@@ -187,7 +187,7 @@ module "ubuntu_nw1" {
 
 module "ubuntu_nw2" {
   source = "./modules/ubuntu_nw2"
-  depends_on = [google_compute_address.fgvm-3-ip.address]
+  depends_on = [google_compute_address.fgvm-3-ip]
   count  = var.ubnw2Count
 
   gcpProject = var.gcpProject
