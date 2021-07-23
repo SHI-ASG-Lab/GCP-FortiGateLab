@@ -23,7 +23,7 @@ resource "google_compute_instance" "winsrv_vm" {
   zone         = var.gcpZone
   #added depends_on because the fortigate int must be created first
   depends_on = [
-  google_compute_subnetwork.fgint1,
+  google_compute_subnetwork.fgint2,
   ]
   allow_stopping_for_update = true
   boot_disk {
