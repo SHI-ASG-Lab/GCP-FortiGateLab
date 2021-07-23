@@ -21,9 +21,6 @@ resource "google_compute_instance" "winsrv_vm" {
   name         = var.win1Name
   machine_type = "e2-medium"
   zone         = var.gcpZone
-  depends_on = [
-  google_compute_address.fgvm-1-ip.address,
-  ]
   allow_stopping_for_update = true
   boot_disk {
     source     = google_compute_disk.winsrv1-disk.self_link
