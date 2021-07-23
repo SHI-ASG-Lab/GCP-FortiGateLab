@@ -21,6 +21,9 @@ resource "google_compute_instance" "Ubuntu_vm" {
   name         = var.ub2Name
   machine_type = "e2-medium"
   zone         = var.gcpZone
+  depends_on = [
+  google_compute_subnetwork.fgint2,
+  ]
   allow_stopping_for_update = true
   boot_disk {
     source     = google_compute_disk.ubuntu1-disk.self_link
