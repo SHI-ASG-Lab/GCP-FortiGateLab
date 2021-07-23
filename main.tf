@@ -47,16 +47,16 @@ variable "win2Count" {
   type = number
 }
 variable "subnet_cidr1" {
-  type = number
+  type = string
 }
 variable "subnet_cidr2" {
-  type = number
+  type = string
 }
 variable "fgint1" {
-  type = number
+  type = string
 }
 variable "fgint2" {
-  type = number
+  type = string
 }
 
 # Locals
