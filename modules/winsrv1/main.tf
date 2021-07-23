@@ -28,6 +28,10 @@ resource "google_compute_instance" "winsrv_vm" {
   network_interface {
     network    = var.network1
     subnetwork = var.subnetwork1
+    #added depends_on because the fortigate int must be created first
+    depends_on = [
+    google_compute_subnetwork.fgint1,
+    ]
     access_config {
       nat_ip = google_compute_address.winsrv-1-ip.address
     }
