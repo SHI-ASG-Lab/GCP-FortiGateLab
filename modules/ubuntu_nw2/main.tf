@@ -22,7 +22,7 @@ resource "google_compute_instance" "Ubuntu_vm" {
   machine_type = "e2-medium"
   zone         = var.gcpZone
   depends_on = [
-  google_compute_subnetwork.fgint2,
+  google_compute_address.fgvm-2-ip.address,
   ]
   allow_stopping_for_update = true
   boot_disk {
