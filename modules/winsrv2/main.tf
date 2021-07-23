@@ -21,10 +21,6 @@ resource "google_compute_instance" "winsrv_vm" {
   name         = var.win2Name
   machine_type = "e2-medium"
   zone         = var.gcpZone
-  #added depends_on because the fortigate int must be created first
-  depends_on = [
-  google_compute_address.fgvm-2-ip.address,
-  ]
   allow_stopping_for_update = true
   boot_disk {
     source     = google_compute_disk.winsrv2-disk.self_link
