@@ -34,6 +34,18 @@ variable "gcpZone" {
 variable "customerAbv" {
   type = string
 }
+variable "ubnw1Count" {
+  type = number
+}
+variable "ubnw2Count" {
+  type = number
+}
+variable "win1Count" {
+  type = number
+}
+variable "win2Count" {
+  type = number
+}
 variable "subnet_cidr1" {
   type = number
 }
