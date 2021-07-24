@@ -77,6 +77,7 @@ data "google_compute_network" "default" {
   name    = "default"
   project = var.gcpProject
 }
+
 data "google_compute_subnetwork" "default" {
   name    = "default"
   project = var.gcpProject
