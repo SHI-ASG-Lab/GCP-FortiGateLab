@@ -169,7 +169,7 @@ resource "google_compute_instance" "fgvm-1" {
 
 module "ubuntu_nw1" {
   source = "./modules/ubuntu_nw1"
-  depends_on = [google_compute_address.fgvm-2-ip]
+  depends_on = [google_compute_instance.fgvm-1]
   count  = var.ubnw1Count
 
   gcpProject = var.gcpProject
@@ -187,7 +187,7 @@ module "ubuntu_nw1" {
 
 module "ubuntu_nw2" {
   source = "./modules/ubuntu_nw2"
-  depends_on = [google_compute_address.fgvm-3-ip]
+  depends_on = [google_compute_instance.fgvm-1]
   count  = var.ubnw2Count
 
   gcpProject = var.gcpProject
@@ -207,7 +207,7 @@ module "ubuntu_nw2" {
   
   module "winsrv1" {
   source = "./modules/winsrv1"
-  depends_on = [google_compute_address.fgvm-1-ip]
+  depends_on = [google_compute_instance.fgvm-1]
   count  = var.win1Count
 
   gcpProject = var.gcpProject
@@ -225,7 +225,7 @@ module "ubuntu_nw2" {
     
   module "winsrv2" {
   source = "./modules/winsrv2"
-  depends_on = [google_compute_address.fgvm-2-ip]
+  depends_on = [google_compute_instance.fgvm-1]
   count  = var.win2Count
 
   gcpProject = var.gcpProject
