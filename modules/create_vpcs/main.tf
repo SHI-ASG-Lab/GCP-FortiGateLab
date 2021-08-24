@@ -65,9 +65,10 @@ resource "google_compute_firewall" "firewall1" {
     protocol = "tcp"
     ports    = ["3389"]
   }
+ */
   source_ranges = ["0.0.0.0/0"]
 }
-*/
+
 # VPC2 firewall configuration
 resource "google_compute_firewall" "firewall2" {
   name    = "${var.projectName}-firewall2"
@@ -91,9 +92,10 @@ resource "google_compute_firewall" "firewall2" {
     protocol = "tcp"
     ports    = ["3389"]
   }
+ */
   source_ranges = ["0.0.0.0/0"]
 }
-*/
+
 #Routes
 resource "google_compute_route" "fgnw1to2" {
   name        = "${var.projectName}-fgnw1to2"
