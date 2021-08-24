@@ -48,9 +48,9 @@ resource "google_compute_firewall" "firewall1" {
   network = google_compute_network.vpc1.self_link
 
   allow {
-    protocol = "icmp"
+    protocol = "all"
   }
-
+/*
   allow {
     protocol = "tcp"
     ports    = ["22"]
@@ -67,16 +67,16 @@ resource "google_compute_firewall" "firewall1" {
   }
   source_ranges = ["0.0.0.0/0"]
 }
-
+*/
 # VPC2 firewall configuration
 resource "google_compute_firewall" "firewall2" {
   name    = "${var.projectName}-firewall2"
   network = google_compute_network.vpc2.self_link
 
   allow {
-    protocol = "icmp"
+    protocol = "all"
   }
-
+/*
   allow {
     protocol = "tcp"
     ports    = ["22"]
@@ -93,7 +93,7 @@ resource "google_compute_firewall" "firewall2" {
   }
   source_ranges = ["0.0.0.0/0"]
 }
-
+*/
 #Routes
 resource "google_compute_route" "fgnw1to2" {
   name        = "${var.projectName}-fgnw1to2"
