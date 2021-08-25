@@ -164,7 +164,7 @@ resource "google_compute_instance" "fgvm-1" {
     }
   }
   labels = local.fg1Labels
-  tags  = [local.net1Tags, local.net2Tags]
+  tags  = ["${local.net1Tags}", "${local.net2Tags}"]
 }
 
 # Ubuntu System(s)
