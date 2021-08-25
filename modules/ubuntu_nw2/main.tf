@@ -22,6 +22,7 @@ resource "google_compute_instance" "Ubuntu_vm" {
   machine_type = "e2-medium"
   zone         = var.gcpZone
   allow_stopping_for_update = true
+  can_ip_forward = true
   boot_disk {
     source     = google_compute_disk.ubuntu1-disk.self_link
   }
