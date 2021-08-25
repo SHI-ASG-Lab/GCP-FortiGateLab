@@ -66,7 +66,8 @@ locals {
     owner = "jwilliams"
     sp    = "lab"
   }
-  netTags = ["fortilab1"]
+  net1Tags = ["fortilab1"]
+  net2Tags = ["fortilab2"]
 }
 
 ## Resources ##
@@ -91,7 +92,6 @@ module "create_vpcs" {
   gcpZone = var.gcpZone
 
   labels = local.fg1Labels
-  tags  = local.netTags
 
   subnet_cidr1 = var.subnet_cidr1
   subnet_cidr2 = var.subnet_cidr2
@@ -136,6 +136,7 @@ resource "google_compute_instance" "fgvm-1" {
   name         = "fortilab-${var.customerAbv}-fortigate-vm"
   machine_type = "e2-standard-4"
   zone         = var.gcpZone
+  can_ip_forward = true
   boot_disk {
     source     = google_compute_disk.fgvm-1-disk.self_link
   }
@@ -163,7 +164,7 @@ resource "google_compute_instance" "fgvm-1" {
     }
   }
   labels = local.fg1Labels
-  tags  = local.netTags
+  tags  = local.net1Tags, local.net2Tags
 }
 
 # Ubuntu System(s)
@@ -177,7 +178,7 @@ module "ubuntu_nw1" {
   gcpZone = var.gcpZone
 
   labels = local.fg1Labels
-  tags  = local.netTags
+  tags  = local.net1Tags
 
   ub1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index}"
   disk1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index}-disk"
@@ -195,7 +196,7 @@ module "ubuntu_nw2" {
   gcpZone = var.gcpZone
 
   labels = local.fg1Labels
-  tags  = local.netTags
+  tags  = local.net2Tags
 
   ub2Name = "fortilab-${var.customerAbv}-ubuntu2-${count.index}"
   disk2Name = "fortilab-${var.customerAbv}-ubuntu2-${count.index}-disk"
@@ -215,7 +216,7 @@ module "ubuntu_nw2" {
   gcpZone = var.gcpZone
 
   labels = local.fg1Labels
-  tags  = local.netTags
+  tags  = local.net1Tags
 
   win1Name = "fortilab-${var.customerAbv}-winsrv1-${count.index}"
   disk1Name = "fortilab-${var.customerAbv}-winsrv1-${count.index}-disk"
@@ -233,7 +234,7 @@ module "ubuntu_nw2" {
   gcpZone = var.gcpZone
 
   labels = local.fg1Labels
-  tags  = local.netTags
+  tags  = local.net2Tags
 
   win2Name = "fortilab-${var.customerAbv}-winsrv2-${count.index}"
   disk2Name = "fortilab-${var.customerAbv}-winsrv2-${count.index}-disk"
