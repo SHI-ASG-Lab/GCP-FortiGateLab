@@ -16,10 +16,6 @@ variable "labels" {
   type = map(string)
 }
 
-variable "tags" {
-  type = set(string)
-}
-
 variable "subnet_cidr1" {
   type = string
 }
