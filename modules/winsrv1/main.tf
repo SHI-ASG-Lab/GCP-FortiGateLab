@@ -11,10 +11,10 @@ resource "google_compute_disk" "winsrv1-disk" {
   zone = var.gcpZone
 }
 
-resource "google_compute_address" "winsrv-1-ip" {
-  name = "${var.win1Name}-ip"
-  address_type = "EXTERNAL"
-}
+#resource "google_compute_address" "winsrv-1-ip" {
+#  name = "${var.win1Name}-ip"
+#  address_type = "EXTERNAL"
+#}
 
 resource "google_compute_instance" "winsrv_vm" {
   project      = var.gcpProject
@@ -29,9 +29,9 @@ resource "google_compute_instance" "winsrv_vm" {
   network_interface {
     network    = var.network1
     subnetwork = var.subnetwork1
-    access_config {
-      nat_ip = google_compute_address.winsrv-1-ip.address
-    }
+#    access_config {
+#      nat_ip = google_compute_address.winsrv-1-ip.address
+#    }
   }
   labels = var.labels
   tags  = var.tags
