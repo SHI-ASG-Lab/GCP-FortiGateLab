@@ -120,15 +120,15 @@ resource "google_compute_address" "fgvm-1-ip" {
   address_type = "EXTERNAL"
 }
 
-resource "google_compute_address" "fgvm-2-ip" {
-  name = "fortilab-${var.customerAbv}-ext-fgvm-2-ip"
-  address_type = "EXTERNAL"
-}
+#resource "google_compute_address" "fgvm-2-ip" {
+#  name = "fortilab-${var.customerAbv}-ext-fgvm-2-ip"
+#  address_type = "EXTERNAL"
+#}
 
-resource "google_compute_address" "fgvm-3-ip" {
-  name = "fortilab-${var.customerAbv}-ext-fgvm-3-ip"
-  address_type = "EXTERNAL"
-}
+#resource "google_compute_address" "fgvm-3-ip" {
+#  name = "fortilab-${var.customerAbv}-ext-fgvm-3-ip"
+#  address_type = "EXTERNAL"
+#}
 
 
 resource "google_compute_instance" "fgvm-1" {
@@ -151,16 +151,16 @@ resource "google_compute_instance" "fgvm-1" {
     network    = module.create_vpcs.nw1
     subnetwork = module.create_vpcs.sn1
     network_ip = var.fgint1
-    access_config {
-      nat_ip = google_compute_address.fgvm-2-ip.address
-    }
+    #access_config {
+    #  nat_ip = google_compute_address.fgvm-2-ip.address
+    #}
   }
   network_interface {
     network    = module.create_vpcs.nw2
     subnetwork = module.create_vpcs.sn2
     network_ip = var.fgint2
     access_config {
-      nat_ip = google_compute_address.fgvm-3-ip.address
+   #   nat_ip = google_compute_address.fgvm-3-ip.address
     }
   }
   labels = local.fg1Labels
