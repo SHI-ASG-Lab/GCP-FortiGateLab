@@ -93,13 +93,13 @@ resource "google_compute_firewall" "firewall2" {
     ports    = ["3389"]
   }
  */
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = "0.0.0.0/0"
 }
 
 #Routes
 resource "google_compute_route" "fgnw1to2" {
   name        = "${var.projectName}-fgnw1to2"
-  dest_range  = ["0.0.0.0/0"]
+  dest_range  = "0.0.0.0/0"
   network     = google_compute_network.vpc1.self_link
   next_hop_ip = var.fgint1
   priority    = 100
