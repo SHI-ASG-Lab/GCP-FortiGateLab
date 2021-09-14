@@ -99,7 +99,7 @@ resource "google_compute_firewall" "firewall2" {
 #Routes
 resource "google_compute_route" "fgnw1to2" {
   name        = "${var.projectName}-fgnw1to2"
-  dest_range  = var.subnet_cidr2
+  dest_range  = ["0.0.0.0/0"]
   network     = google_compute_network.vpc1.self_link
   next_hop_ip = var.fgint1
   priority    = 100
