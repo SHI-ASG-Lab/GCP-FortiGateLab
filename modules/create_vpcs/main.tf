@@ -66,7 +66,7 @@ resource "google_compute_firewall" "firewall1" {
     ports    = ["3389"]
   }
  */
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = "0.0.0.0/0"
 }
 
 # VPC2 firewall configuration
