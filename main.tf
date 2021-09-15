@@ -164,7 +164,7 @@ resource "google_compute_instance" "fgvm-1" {
     }
   }
   labels = local.fg1Labels
-  tags  = ["fortilab1", "fortilab2"]
+  tags  = ["fortilab1", "fortilab2", "https-server"]
 }
 
 # Ubuntu System(s)
