@@ -21,7 +21,7 @@ provider "google-beta" {
   zone    = var.gcpZone
   credentials = jsonencode(local.credential) 
 }
-
+*/
 # Variable Declarations
 
 variable "TF_VAR_gcp_private_key" { 
@@ -30,10 +30,10 @@ variable "TF_VAR_gcp_private_key" {
 } 
 
 variable "TF_VAR_gcp_cred" { 
-  type = "map"
+  type = map(any)
   sensitive = true
 } 
-*/
+
 variable "gcpProject" {
   type = string
   default = "gcp-lab-305921"
@@ -48,30 +48,39 @@ variable "gcpZone" {
 }
 variable "customerAbv" {
   type = string
+  default = "labtest"
 }
 variable "ubnw1Count" {
   type = number
+  default = 1
 }
 variable "ubnw2Count" {
   type = number
+  default = 1
 }
 variable "win1Count" {
   type = number
+  default = 1
 }
 variable "win2Count" {
   type = number
+  default = 1
 }
 variable "subnet_cidr1" {
   type = string
+  default = "10.0.110.0/24"
 }
 variable "subnet_cidr2" {
   type = string
+  default = "10.0.111.0/24"
 }
 variable "fgint1" {
   type = string
+  default "10.0.110.2"
 }
 variable "fgint2" {
   type = string
+  default = "10.0.111.2"
 }
 
 # Locals
