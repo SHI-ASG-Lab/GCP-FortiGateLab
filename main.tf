@@ -14,7 +14,7 @@ provider "google" {
   zone    = var.gcpZone
   credentials = jsonencode(local.credential) 
 }
-
+/*
 provider "google-beta" {
   project = var.gcpProject
   region  = var.gcpRegion
@@ -24,16 +24,16 @@ provider "google-beta" {
 
 # Variable Declarations
 
-#variable "TF_VAR_gcp_private_key" { 
-#  type = string
-#  sensitive = true
-#} 
+variable "TF_VAR_gcp_private_key" { 
+  type = string
+  sensitive = true
+} 
 
-#variable "TF_VAR_gcp_cred" { 
-#  type = "map"
-#  sensitive = true
-#} 
-
+variable "TF_VAR_gcp_cred" { 
+  type = "map"
+  sensitive = true
+} 
+*/
 variable "gcpProject" {
   type = string
   default = "gcp-lab-305921"
