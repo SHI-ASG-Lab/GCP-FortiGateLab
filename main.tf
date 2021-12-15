@@ -24,15 +24,15 @@ provider "google-beta" {
 
 # Variable Declarations
 
-variable "TF_VAR_gcp_private_key" { 
-  type = string
-  sensitive = true
-} 
+#variable "TF_VAR_gcp_private_key" { 
+#  type = string
+#  sensitive = true
+#} 
 
-variable "TF_VAR_gcp_cred" { 
-  type = "map"
-  sensitive = true
-} 
+#variable "TF_VAR_gcp_cred" { 
+#  type = "map"
+#  sensitive = true
+#} 
 
 variable "gcpProject" {
   type = string
