@@ -30,7 +30,7 @@ variable "TF_VAR_gcp_private_key" {
 } 
 
 variable "TF_VAR_gcp_cred" { 
-  type = map(string)
+  type = map
   sensitive = true
 } 
 
