@@ -24,24 +24,27 @@ provider "google-beta" {
 
 # Variable Declarations
 
-variable "gcp_private_key" { 
+variable "TF_VAR_gcp_private_key" { 
   type = string
   sensitive = true
 } 
 
-variable "gcp_cred" { 
+variable "TF_VAR_gcp_cred" { 
   type = map(string)
   sensitive = true
 } 
 
 variable "gcpProject" {
   type = string
+  default = "gcp-lab-305921"
 }
 variable "gcpRegion" {
   type = string
+  default = "us-central1"
 }
 variable "gcpZone" {
   type = string
+  default = "us-central1-a"
 }
 variable "customerAbv" {
   type = string
@@ -74,7 +77,7 @@ variable "fgint2" {
 # Locals
 
 locals {
-  credential = merge(var.gcp_cred, {private_key = "${var.gcp_private_key}"}) 
+  credential = merge(var.TF_VAR_gcp_cred, {private_key = "${var.TF_VAR_gcp_private_key}"}) 
   fg1Labels = {
     owner = "jwilliams"
     sp    = "lab"
