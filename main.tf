@@ -2,8 +2,10 @@
 terraform {
   required_providers {
       google = {
-          source = "google"
-          version = ">= 3.73.0"
+          #source = "google"
+          #version = ">= 3.73.0"
+          source  = "hashicorp/google"
+          version = "3.84.0"
       }
   }
 }
@@ -12,15 +14,29 @@ provider "google" {
   project = var.gcpProject
   region  = var.gcpRegion
   zone    = var.gcpZone
+  credentials = jsonencode(local.credential) 
 }
 
 provider "google-beta" {
   project = var.gcpProject
   region  = var.gcpRegion
   zone    = var.gcpZone
+  credentials = jsonencode(local.credential) 
 }
 
 # Variable Declarations
+
+variable "gcp_private_key" { 
+  type = string 
+} 
+
+variable "gcp_cred" { 
+  type = map 
+} 
+
+locals {
+  credential = merge(var.gcp_cred, {private_key = "${var.gcp_private_key}"}) 
+} 
 
 variable "gcpProject" {
   type = string
