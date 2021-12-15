@@ -2,8 +2,6 @@
 terraform {
   required_providers {
       google = {
-          #source = "google"
-          #version = ">= 3.73.0"
           source  = "hashicorp/google"
           version = "3.84.0"
       }
@@ -32,10 +30,6 @@ variable "gcp_private_key" {
 
 variable "gcp_cred" { 
   type = map 
-} 
-
-locals {
-  credential = merge(var.gcp_cred, {private_key = "${var.gcp_private_key}"}) 
 } 
 
 variable "gcpProject" {
@@ -78,6 +72,7 @@ variable "fgint2" {
 # Locals
 
 locals {
+  credential = merge(var.gcp_cred, {private_key = "${var.gcp_private_key}"}) 
   fg1Labels = {
     owner = "jwilliams"
     sp    = "lab"
