@@ -30,7 +30,7 @@ variable "gcp_private_key" {
 } 
 
 variable "gcp_cred" { 
-  type = map
+  type = map(string)
   sensitive = true
 } 
 
