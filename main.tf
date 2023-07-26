@@ -117,7 +117,7 @@ module "create_vpcs" {
 # FortiGate
 
 data "google_compute_image" "fg-ngfw" {
-  name    = "fortinet-ngfw"
+  name    = "fortinet-ngfw74"
   project = var.gcpProject
 }
 
