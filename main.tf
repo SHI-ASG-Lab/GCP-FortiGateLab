@@ -23,7 +23,7 @@ provider "google-beta" {
 }
 
 # Variable Declarations
-*/
+/*
 variable "gcp_private_key" { 
   type = string
   sensitive = true
@@ -33,7 +33,8 @@ variable "gcp_cred" {
   type = map(string)
   sensitive = true
 } 
-/*
+*/
+
 variable "gcpProject" {
   type = string
 }
