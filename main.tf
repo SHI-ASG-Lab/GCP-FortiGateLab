@@ -158,12 +158,12 @@ resource "google_compute_address" "fgvm-1-ip" {
 
 resource "google_compute_address" "fgvm-2-ip" {
   name = "fortilab-${var.customerAbv}-ext-fgvm-2-ip"
-  address_type = "EXTERNAL"
+  address_type = "INTERNAL"
 }
 
 resource "google_compute_address" "fgvm-3-ip" {
   name = "fortilab-${var.customerAbv}-ext-fgvm-3-ip"
-  address_type = "EXTERNAL"
+  address_type = "INTERNAL"
 }
 
 
