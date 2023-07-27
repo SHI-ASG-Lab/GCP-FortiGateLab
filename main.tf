@@ -99,7 +99,7 @@ resource "time_static" "creation" {}
 
 data "google_folder" "folder_1" {
   folder              = "${var.folder}"
-  lookup_organization = true
+#  lookup_organization = true
 }
 
 resource "google_project" "my_project-in-a-folder" {
