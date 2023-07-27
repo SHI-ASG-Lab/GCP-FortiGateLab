@@ -1,4 +1,5 @@
 gcpProject = "gcp-lab-305921"
+newProj = "DBugg"
 gcpRegion    = "us-central1"
 gcpZone    = "us-central1-a"
 customerAbv  = "labtest"
