@@ -94,6 +94,7 @@ locals {
 # Project
 
 resource "time_static" "creation" {}
+
 CreationDate = formatdate("D MMM YYYY H:mmaa ZZZ", time_static.creation.rfc3339)
 
 data "google_folder" "folder_1" {
