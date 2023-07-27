@@ -38,6 +38,12 @@ variable "gcp_cred" {
 variable "gcpProject" {
   type = string
 }
+variable "folder" {
+  type = string
+}
+variable "CreationDate" {
+  type = string
+}
 variable "gcpRegion" {
   type = string
 }
@@ -85,6 +91,22 @@ locals {
 
 ## Resources ##
 
+# Project
+
+resource "time_static" "creation" {}
+CreationDate = formatdate("D MMM YYYY H:mmaa ZZZ", time_static.creation.rfc3339)
+
+data "google_folder" "folder_1" {
+  folder              = "${var.folder}"
+  lookup_organization = true
+}
+
+resource "google_project" "my_project-in-a-folder" {
+  name       = "${var.gcpProject}-${var.CreationDate}"
+  project_id = var.gcpProject
+  folder_id  = google_folder.folder_1.name
+}
+
 # Networks
 
 data "google_compute_network" "default" {
@@ -118,7 +140,7 @@ module "create_vpcs" {
 # FortiGate
 
 data "google_compute_image" "fg-ngfw" {
-  name    = "fortinet-ngfw7012"
+  name    = var.fwimgName
   project = var.gcpProject
 }
 
@@ -148,7 +170,7 @@ resource "google_compute_address" "fgvm-3-ip" {
 resource "google_compute_instance" "fgvm-1" {
   project      = var.gcpProject
   name         = "fortilab-${var.customerAbv}-fortigate-vm"
-  machine_type = "e2-standard-4"
+  machine_type = "n1-standard-2"
   zone         = var.gcpZone
   boot_disk {
     source     = google_compute_disk.fgvm-1-disk.self_link
