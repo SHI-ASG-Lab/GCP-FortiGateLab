@@ -41,9 +41,6 @@ variable "gcpProject" {
 variable "folder" {
   type = string
 }
-variable "CreationDate" {
-  type = string
-}
 variable "gcpRegion" {
   type = string
 }
@@ -95,7 +92,7 @@ locals {
 
 resource "time_static" "creation" {}
 
-CreationDate = formatdate("D MMM YYYY H:mmaa ZZZ", time_static.creation.rfc3339)
+CreationDate = formatdate("D-MMM-YYYY", time_static.creation.rfc3339)
 
 data "google_folder" "folder_1" {
   folder              = "${var.folder}"
@@ -103,7 +100,7 @@ data "google_folder" "folder_1" {
 }
 
 resource "google_project" "my_project-in-a-folder" {
-  name       = "${var.gcpProject}-${var.CreationDate}"
+  name       = "${var.gcpProject}-${time_static.creation.id}"
   project_id = var.gcpProject
   folder_id  = google_folder.folder_1.name
 }
