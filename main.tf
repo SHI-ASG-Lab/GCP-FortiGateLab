@@ -68,6 +68,9 @@ variable "subnet_cidr1" {
 variable "subnet_cidr2" {
   type = string
 }
+variable "fwimgName" {
+  type = string
+}
 variable "fgint1" {
   type = string
 }
@@ -102,7 +105,7 @@ data "google_folder" "folder_1" {
 resource "google_project" "my_project-in-a-folder" {
   name       = "${var.gcpProject}-${time_static.creation.id}"
   project_id = var.gcpProject
-  folder_id  = google_folder.folder_1.name
+  folder_id  = google_folder.folder_1.folder
 }
 
 # Networks
