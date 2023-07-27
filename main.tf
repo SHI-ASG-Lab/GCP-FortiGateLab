@@ -105,7 +105,7 @@ data "google_folder" "folder_1" {
 resource "google_project" "my_project-in-a-folder" {
   name       = "${var.gcpProject}-${time_static.creation.id}"
   project_id = var.gcpProject
-  folder_id  = google_folder.folder_1.folder
+  folder_id  = data.google_folder.folder_1.folder
 }
 
 # Networks
