@@ -48,22 +48,7 @@ resource "google_compute_firewall" "firewall1" {
   network = google_compute_network.vpc1.self_link
 
   allow {
-    protocol = "icmp"
-  }
-
-  allow {
-    protocol = "tcp"
-    ports    = ["22"]
-  }
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
-
-  allow {
-    protocol = "tcp"
-    ports    = ["3389"]
+    protocol = "all"
   }
   source_ranges = ["0.0.0.0/0"]
 }
@@ -74,22 +59,7 @@ resource "google_compute_firewall" "firewall2" {
   network = google_compute_network.vpc2.self_link
 
   allow {
-    protocol = "icmp"
-  }
-
-  allow {
-    protocol = "tcp"
-    ports    = ["22"]
-  }
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
-
-  allow {
-    protocol = "tcp"
-    ports    = ["3389"]
+    protocol = "all"
   }
   source_ranges = ["0.0.0.0/0"]
 }
