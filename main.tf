@@ -108,7 +108,7 @@ resource "google_project" "project" {
 
 data "google_compute_network" "default" {
   name    = "default"
-  project = google_project.my_project-in-a-folder.name
+  project = google_project.project.name
 }
 
 data "google_compute_subnetwork" "default" {
