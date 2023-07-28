@@ -136,7 +136,7 @@ data "google_compute_network" "default" {
 resource "google_compute_network" "vpc1" {
  name                    = "${var.customerAbv}-1-net"
  auto_create_subnetworks = false
- project                 = var.gcpProject
+ project                 = google_project.project.project_id
 }
 
 output "nw1" {
