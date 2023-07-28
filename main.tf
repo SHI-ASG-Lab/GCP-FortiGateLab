@@ -100,7 +100,7 @@ data "google_folder" "folder_1" {
 
 resource "google_project" "my_project-in-a-folder" {
   name       = "${var.gcpProject}-${local.CreationDate}"
-  project_id = var.gcpProject
+  project_id = "${var.gcpProject}-${local.CreationDate}"
   folder_id  = data.google_folder.folder_1.folder
 }
 
