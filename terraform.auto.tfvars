@@ -1,5 +1,4 @@
 gcpProject   = "dbugg"
-folder       = "Guest Labs"
 gcpRegion    = "us-central1"
 gcpZone      = "us-central1-a"
 customerAbv  = "dbugg"
