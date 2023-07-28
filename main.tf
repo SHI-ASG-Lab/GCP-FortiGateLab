@@ -9,14 +9,14 @@ terraform {
 }
 
 provider "google" {
-  project = var.gcpProject
+#  project = var.gcpProject
   region  = var.gcpRegion
   zone    = var.gcpZone
 #  credentials = jsonencode(local.credential) 
 }
 
 provider "google-beta" {
-  project = var.gcpProject
+#  project = var.gcpProject
   region  = var.gcpRegion
   zone    = var.gcpZone
 #  credentials = jsonencode(local.credential) 
@@ -98,7 +98,7 @@ data "google_folder" "folder_1" {
 #  lookup_organization = true
 }
 
-resource "google_project" "my_project-in-a-folder" {
+resource "google_project" "project" {
   name       = "${var.gcpProject}-${local.CreationDate}"
   project_id = "${var.gcpProject}-${local.CreationDate}"
   folder_id  = data.google_folder.folder_1.folder
@@ -113,13 +113,13 @@ data "google_compute_network" "default" {
 
 data "google_compute_subnetwork" "default" {
   name    = "default"
-  project = var.gcpProject
+  project = google_project.project.project_id
 }
 
 module "create_vpcs" {
   source = "./modules/create_vpcs"
 
-  gcpProject = var.gcpProject
+  gcpProject = google_project.project.project_id
   gcpRegion = var.gcpRegion
   gcpZone = var.gcpZone
 
@@ -165,7 +165,7 @@ resource "google_compute_address" "fgvm-3-ip" {
 
 
 resource "google_compute_instance" "fgvm-1" {
-  project      = var.gcpProject
+  project      = google_project.project.project_id
   name         = "fortilab-${var.customerAbv}-fortigate-vm"
   machine_type = "n1-standard-2"
   zone         = var.gcpZone
@@ -206,7 +206,7 @@ module "ubuntu_nw1" {
   depends_on = [google_compute_instance.fgvm-1]
   count  = var.ubnw1Count
 
-  gcpProject = var.gcpProject
+  gcpProject = google_project.project.project_id
   gcpZone = var.gcpZone
 
   labels = local.fg1Labels
@@ -224,7 +224,7 @@ module "ubuntu_nw2" {
   depends_on = [google_compute_instance.fgvm-1]
   count  = var.ubnw2Count
 
-  gcpProject = var.gcpProject
+  gcpProject = google_project.project.project_id
   gcpZone = var.gcpZone
 
   labels = local.fg1Labels
@@ -244,7 +244,7 @@ module "ubuntu_nw2" {
   depends_on = [google_compute_instance.fgvm-1]
   count  = var.win1Count
 
-  gcpProject = var.gcpProject
+  gcpProject = google_project.project.project_id
   gcpZone = var.gcpZone
 
   labels = local.fg1Labels
@@ -262,7 +262,7 @@ module "ubuntu_nw2" {
   depends_on = [google_compute_instance.fgvm-1]
   count  = var.win2Count
 
-  gcpProject = var.gcpProject
+  gcpProject = google_project.project.project_id
   gcpZone = var.gcpZone
 
   labels = local.fg1Labels
