@@ -128,7 +128,7 @@ data "google_iam_policy" "admin" {
 }
 
 resource "google_project_iam_member" "owner2" {
-  depends_on = [google_service_account.service_account]
+#  depends_on = [google_service_account.service_account]
   project = google_project.project.project_id
   role    = "roles/owner"
   member  = "user:labterraform-236@gcp-lab-305921.iam.gserviceaccount.com"
