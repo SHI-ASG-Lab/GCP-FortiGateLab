@@ -129,7 +129,7 @@ resource "google_project_service" "project" {
 
 data "google_compute_network" "default" {
   name    = "default"
-  project = google_project.project.name
+  project = google_project.project.project_id
 }
 
 data "google_compute_subnetwork" "default" {
