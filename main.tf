@@ -12,28 +12,17 @@ provider "google" {
 #  project = var.gcpProject
   region  = var.gcpRegion
   zone    = var.gcpZone
-#  credentials = jsonencode(local.credential) 
+
 }
 
 provider "google-beta" {
 #  project = var.gcpProject
   region  = var.gcpRegion
   zone    = var.gcpZone
-#  credentials = jsonencode(local.credential) 
+
 }
 
 # Variable Declarations
-/*
-variable "gcp_private_key" { 
-  type = string
-  sensitive = true
-} 
-
-variable "gcp_cred" { 
-  type = map(string)
-  sensitive = true
-} 
-*/
 
 variable "gcpProject" {
   type = string
@@ -78,60 +67,18 @@ variable "fgint2" {
 # Locals
 
 locals {
-#  credential = merge(var.gcp_cred, {private_key = "${var.gcp_private_key}"}) 
   fg1Labels = {
     owner = "jwilliams"
     sp    = "lab"
   }
   netTags = ["fortilab1"]
- # CreationDate = formatdate("MMYYYY-ss", time_static.creation.rfc3339)
-  CreationDate = "01"
 }
 
 ## Resources ##
 
 # Project
 
-resource "time_static" "creation" {}
-
-data "google_folder" "folder_1" {
-  folder              = "folders/603149754242"
-#  lookup_organization = true
-}
-
-data "google_billing_account" "acct" {
-  billing_account = "billingAccounts/001EEB-9F68FA-623770"
-}
-
-resource "google_project" "project" {
-  name       = "${var.gcpProject}-${local.CreationDate}"
-  project_id = "${var.gcpProject}-${local.CreationDate}"
-  folder_id  = data.google_folder.folder_1.folder
-  org_id     = "66596309756"
-  billing_account = data.google_billing_account.acct.id
-}
-
-resource "google_project_iam_policy" "project" {
-  project     = google_project.project.project_id
-  policy_data = data.google_iam_policy.admin.policy_data
-}
-
-data "google_iam_policy" "admin" {
-  binding {
-    role = "roles/editor"
-
-    members = [
-      "user:jess_williams@shi.com",
-      "user:keith_bormann@shi.com",
-    ]
-  }
-}
-
-resource "google_project_iam_member" "owner2" {
-#  depends_on = [google_service_account.service_account]
-  project = google_project.project.project_id
-  role    = "roles/owner"
-  member  = "user:labterraform-236@gcp-lab-305921.iam.gserviceaccount.com"
+data "google_project" "project" {
 }
 
 variable "gcp_service_list" {
