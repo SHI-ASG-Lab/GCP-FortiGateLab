@@ -95,7 +95,7 @@ resource "time_static" "creation" {}
 #CreationDate = formatdate("D-MMM-YYYY", time_static.creation.rfc3339)
 
 data "google_folder" "folder_1" {
-  folder              = folders/603149754242
+  folder              = "folders/603149754242"
 #  lookup_organization = true
 }
 
