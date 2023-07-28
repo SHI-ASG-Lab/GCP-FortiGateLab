@@ -98,11 +98,15 @@ data "google_folder" "folder_1" {
 #  lookup_organization = true
 }
 
+data "google_billing_account" "acct" {
+  billing_account = "001EEB-9F68FA-623770"
+}
+
 resource "google_project" "project" {
   name       = "${var.gcpProject}-${local.CreationDate}"
   project_id = "${var.gcpProject}-${local.CreationDate}"
   folder_id  = data.google_folder.folder_1.folder
-  billing_account = "001EEB-9F68FA-623770"
+  billing_account = data.google_billing_account.acct.id
 }
 
 resource "google_project_iam_policy" "project" {
