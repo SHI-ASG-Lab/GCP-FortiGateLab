@@ -131,7 +131,8 @@ variable "gcp_service_list" {
   type = list(string)
   default = [
     "compute.googleapis.com",
-    "cloudbilling.googleapis.com"
+    "cloudbilling.googleapis.com",
+    "oslogin.googleapi.com"
   ]
 }
 
@@ -139,6 +140,8 @@ resource "google_project_service" "project" {
   for_each = toset(var.gcp_service_list)
   project = google_project.project.project_id
   service = each.key
+
+  depends on = ["google_project.project.project_id"]
 }
 
 # Networks
