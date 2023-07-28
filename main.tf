@@ -143,7 +143,10 @@ variable "gcp_service_list" {
     "compute.googleapis.com",
     "cloudbilling.googleapis.com",
     "oslogin.googleapi.com",
-    "cloudresourcemanager.googleapis.com"
+    "cloudresourcemanager.googleapis.com",
+    "appengine.googleapi.com",
+    "appengineflex.googleapi.com",
+    "cloudbuild.googleapi.com"
   ]
 }
 
