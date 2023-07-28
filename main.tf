@@ -140,8 +140,12 @@ resource "google_project_service" "project" {
   for_each = toset(var.gcp_service_list)
   project = google_project.project.project_id
   service = each.key
+  disable_dependent_services = true
+  disable_on_destroy = true
 
-  depends on = google_project.project.project_id
+  depends on = [
+    google_project.project.project_id
+  ]
 }
 
 # Networks
