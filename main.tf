@@ -38,9 +38,6 @@ variable "gcp_cred" {
 variable "gcpProject" {
   type = string
 }
-variable "folder" {
-  type = string
-}
 variable "gcpRegion" {
   type = string
 }
