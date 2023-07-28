@@ -100,7 +100,7 @@ data "google_folder" "folder_1" {
 }
 
 resource "google_project" "my_project-in-a-folder" {
-  name       = "${var.gcpProject}-${time_static.creation.id}"
+  name       = "${var.gcpProject}-${formatdate("D-MMM-YYYY", time_static.creation.rfc3339}"
   project_id = var.gcpProject
   folder_id  = data.google_folder.folder_1.folder
 }
@@ -109,7 +109,7 @@ resource "google_project" "my_project-in-a-folder" {
 
 data "google_compute_network" "default" {
   name    = "default"
-  project = var.gcpProject
+  project = google_project.my_project-in-a-folder.name
 }
 
 data "google_compute_subnetwork" "default" {
