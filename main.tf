@@ -132,7 +132,8 @@ variable "gcp_service_list" {
   default = [
     "compute.googleapis.com",
     "cloudbilling.googleapis.com",
-    "oslogin.googleapi.com"
+    "oslogin.googleapi.com",
+    "cloudresourcemanager.googleapis.com"
   ]
 }
 
