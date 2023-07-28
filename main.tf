@@ -123,7 +123,9 @@ data "google_iam_policy" "admin" {
 
 resource "google_project_service" "project" {
   project = google_project.project.project_id
-  service = "compute.googleapis.com"
+  service = [
+    "compute.googleapis.com",
+    "cloudbilling.googleapis.com"
 }
 
 # Networks
