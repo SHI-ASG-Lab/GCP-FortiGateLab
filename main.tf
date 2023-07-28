@@ -134,7 +134,7 @@ data "google_compute_network" "default" {
 }
 
 resource "google_compute_network" "vpc1" {
- name                    = "${var.projectName}-1-net"
+ name                    = "${var.customerAbv}-1-net"
  auto_create_subnetworks = false
  project                 = var.gcpProject
 }
@@ -145,7 +145,7 @@ output "nw1" {
 
 # Create Subnet for Network1
 resource "google_compute_subnetwork" "subn1" {
- name          = "${var.projectName}-1-sn"
+ name          = "${var.customerAbv}-1-sn"
  ip_cidr_range = var.subnet_cidr1
  network       = google_compute_network.vpc1.self_link
  region        = var.gcpRegion
