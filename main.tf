@@ -144,7 +144,7 @@ resource "google_project_service" "project" {
   disable_on_destroy = true
 
   depends_on = [
-    google_project.project.project_id
+    google_project.project
   ]
 }
 
