@@ -84,15 +84,16 @@ locals {
     sp    = "lab"
   }
   netTags = ["fortilab1"]
+  CreationDate = formatdate("D-MMM-YYYY", time_static.creation.rfc3339)
 }
 
 ## Resources ##
 
 # Project
 
-resource "time_static" "creation" {}
+#resource "time_static" "creation" {}
 
-CreationDate = formatdate("D-MMM-YYYY", time_static.creation.rfc3339)
+
 
 data "google_folder" "folder_1" {
   folder              = "folders/603149754242"
@@ -100,7 +101,7 @@ data "google_folder" "folder_1" {
 }
 
 resource "google_project" "my_project-in-a-folder" {
-  name       = "${var.gcpProject}-"+CreationDate
+  name       = "${var.gcpProject}-${local.CreationDate}"
   project_id = var.gcpProject
   folder_id  = data.google_folder.folder_1.folder
 }
