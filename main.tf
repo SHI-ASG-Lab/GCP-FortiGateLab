@@ -104,6 +104,22 @@ resource "google_project" "project" {
   folder_id  = data.google_folder.folder_1.folder
 }
 
+resource "google_project_iam_policy" "project" {
+  project     = google_project.project.project_id
+  policy_data = data.google_iam_policy.admin.policy_data
+}
+
+data "google_iam_policy" "admin" {
+  binding {
+    role = "roles/editor"
+
+    members = [
+      "user:jess_williams@shi.com",
+      "user:keith_bormann@shi.com",
+    ]
+  }
+}
+
 # Networks
 
 data "google_compute_network" "default" {
@@ -146,21 +162,25 @@ resource "google_compute_disk" "fgvm-1-disk" {
   description = "OS disk made from image"
   image = data.google_compute_image.fg-ngfw.self_link
   zone = var.gcpZone
+  project = google_project.project.project_id
 }
 
 resource "google_compute_address" "fgvm-1-ip" {
   name = "fortilab-${var.customerAbv}-ext-fgvm-1-ip"
   address_type = "EXTERNAL"
+  project = google_project.project.project_id
 }
 
 resource "google_compute_address" "fgvm-2-ip" {
   name = "fortilab-${var.customerAbv}-ext-fgvm-2-ip"
   address_type = "INTERNAL"
+  project = google_project.project.project_id
 }
 
 resource "google_compute_address" "fgvm-3-ip" {
   name = "fortilab-${var.customerAbv}-ext-fgvm-3-ip"
   address_type = "INTERNAL"
+  project = google_project.project.project_id
 }
 
 
