@@ -92,7 +92,7 @@ locals {
 
 resource "time_static" "creation" {}
 
-#CreationDate = formatdate("D-MMM-YYYY", time_static.creation.rfc3339)
+CreationDate = formatdate("D-MMM-YYYY", time_static.creation.rfc3339)
 
 data "google_folder" "folder_1" {
   folder              = "folders/603149754242"
@@ -100,7 +100,7 @@ data "google_folder" "folder_1" {
 }
 
 resource "google_project" "my_project-in-a-folder" {
-  name       = "${var.gcpProject}-${formatdate("D-MMM-YYYY", time_static.creation.id}"
+  name       = "${var.gcpProject}-"+CreationDate
   project_id = var.gcpProject
   folder_id  = data.google_folder.folder_1.folder
 }
