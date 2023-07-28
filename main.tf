@@ -141,7 +141,7 @@ resource "google_project_service" "project" {
   project = google_project.project.project_id
   service = each.key
 
-  depends on = ["google_project.project.project_id"]
+  depends on = google_project.project.project_id
 }
 
 # Networks
