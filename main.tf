@@ -132,6 +132,7 @@ variable "gcp_service_list" {
   type = list(string)
   default = [
     "run.googleapis.com",
+    "deploymentmanager.googleapis.com",
     "compute.googleapis.com",
     "cloudbilling.googleapis.com",
     "oslogin.googleapi.com",
