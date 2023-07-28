@@ -100,7 +100,7 @@ data "google_folder" "folder_1" {
 }
 
 data "google_billing_account" "acct" {
-  billing_account = "001EEB-9F68FA-623770"
+  billing_account = "billingAccounts/001EEB-9F68FA-623770"
 }
 
 resource "google_project" "project" {
