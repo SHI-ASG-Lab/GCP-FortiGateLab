@@ -139,7 +139,7 @@ module "create_vpcs" {
 
 data "google_compute_image" "fg-ngfw" {
   name    = var.fwimgName
-  project = var.gcpProject
+  project = gcp-lab-305921
 }
 
 resource "google_compute_disk" "fgvm-1-disk" {
