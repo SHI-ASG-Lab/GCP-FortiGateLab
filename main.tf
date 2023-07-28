@@ -149,6 +149,15 @@ resource "google_project_service" "project" {
   depends_on = [
     google_project.project
   ]
+
+}
+resource "google_cloud_run_service" "renderer" {
+  name     = "renderer"
+  location = var.gcpRegion
+
+  depends_on = [
+    google_project_service.project
+  ]
 }
 
 # Networks
