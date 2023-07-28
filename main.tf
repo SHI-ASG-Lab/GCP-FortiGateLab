@@ -126,6 +126,7 @@ resource "google_project_service" "project" {
   service = [
     "compute.googleapis.com",
     "cloudbilling.googleapis.com"
+  ]
 }
 
 # Networks
