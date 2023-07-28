@@ -84,7 +84,8 @@ locals {
     sp    = "lab"
   }
   netTags = ["fortilab1"]
-  CreationDate = formatdate("MMYYYY-ss", time_static.creation.rfc3339)
+ # CreationDate = formatdate("MMYYYY-ss", time_static.creation.rfc3339)
+  CreationDate = "01"
 }
 
 ## Resources ##
