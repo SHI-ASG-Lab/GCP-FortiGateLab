@@ -102,6 +102,7 @@ resource "google_project" "project" {
   name       = "${var.gcpProject}-${local.CreationDate}"
   project_id = "${var.gcpProject}-${local.CreationDate}"
   folder_id  = data.google_folder.folder_1.folder
+  billing_account = 001EEB-9F68FA-623770
 }
 
 resource "google_project_iam_policy" "project" {
@@ -131,6 +132,25 @@ data "google_compute_network" "default" {
   name    = "default"
   project = google_project.project.project_id
 }
+
+resource "google_compute_network" "vpc1" {
+ name                    = "${var.projectName}-1-net"
+ auto_create_subnetworks = false
+ project                 = var.gcpProject
+}
+
+output "nw1" {
+ value = google_compute_network.vpc1.self_link
+}
+
+# Create Subnet for Network1
+resource "google_compute_subnetwork" "subn1" {
+ name          = "${var.projectName}-1-sn"
+ ip_cidr_range = var.subnet_cidr1
+ network       = google_compute_network.vpc1.self_link
+ region        = var.gcpRegion
+}
+
 
 data "google_compute_subnetwork" "default" {
   name    = "default"
