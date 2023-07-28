@@ -91,9 +91,7 @@ locals {
 
 # Project
 
-#resource "time_static" "creation" {}
-
-
+resource "time_static" "creation" {}
 
 data "google_folder" "folder_1" {
   folder              = "folders/603149754242"
