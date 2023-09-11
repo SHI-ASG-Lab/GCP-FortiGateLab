@@ -1,9 +1,5 @@
 # Variables
 
-variable "gcpProject" {
-  type = string
-}
-
 variable "gcpRegion" {
   type = string
 }
