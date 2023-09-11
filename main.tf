@@ -116,25 +116,21 @@ resource "google_compute_disk" "fgvm-1-disk" {
   description = "OS disk made from image"
   image = data.google_compute_image.fg-ngfw.self_link
   zone = var.gcpZone
-  project = var.gcpProject
 }
 
 resource "google_compute_address" "fgvm-1-ip" {
   name = "fortilab-${var.customerAbv}-ext-fgvm-1-ip"
   address_type = "EXTERNAL"
-  project = var.gcpProject
 }
 
 resource "google_compute_address" "fgvm-2-ip" {
   name = "fortilab-${var.customerAbv}-ext-fgvm-2-ip"
   address_type = "INTERNAL"
-  project = var.gcpProject
 }
 
 resource "google_compute_address" "fgvm-3-ip" {
   name = "fortilab-${var.customerAbv}-ext-fgvm-3-ip"
   address_type = "INTERNAL"
-  project = var.gcpProject
 }
 
 resource "google_compute_instance" "fgvm-1" {
