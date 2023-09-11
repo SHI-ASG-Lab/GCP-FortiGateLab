@@ -2,7 +2,6 @@
 resource "google_compute_network" "vpc1" {
  name                    = "${var.projectName}-1-net"
  auto_create_subnetworks = false
- project                 = var.gcpProject
 }
 
 output "nw1" {
@@ -25,7 +24,6 @@ resource "google_compute_subnetwork" "subn1" {
 resource "google_compute_network" "vpc2" {
  name                    = "${var.projectName}-2-net"
  auto_create_subnetworks = false
- project                 = var.gcpProject
 }
 
 output "nw2" {
