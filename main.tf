@@ -9,14 +9,14 @@ terraform {
 }
 
 provider "google" {
-#  project = var.gcpProject
+  project = var.gcpProject
   region  = var.gcpRegion
   zone    = var.gcpZone
 
 }
 
 provider "google-beta" {
-#  project = var.gcpProject
+  project = var.gcpProject
   region  = var.gcpRegion
   zone    = var.gcpZone
 
@@ -74,81 +74,16 @@ locals {
   netTags = ["fortilab1"]
 }
 
-## Resources ##
-
-# Project
-
-data "google_project" "project" {
-}
-
-variable "gcp_service_list" {
-  description ="The list of apis necessary for the project"
-  type = list(string)
-  default = [
-    "run.googleapis.com",
-    "deploymentmanager.googleapis.com",
-    "compute.googleapis.com",
-    "cloudbilling.googleapis.com",
-    "oslogin.googleapi.com",
-    "cloudresourcemanager.googleapis.com",
-    "appengine.googleapi.com",
-    "appengineflex.googleapi.com",
-    "cloudbuild.googleapi.com",
-    "serviceusage.googleapi.com",
-    "iam.googleapi.com"
-  ]
-}
-
-resource "google_project_service" "project" {
-  for_each = toset(var.gcp_service_list)
-  project = google_project.project.project_id
-  service = each.key
-  disable_dependent_services = true
-  disable_on_destroy = true
-
-  depends_on = [
-    google_project.project
-  ]
-
-}
-resource "google_cloud_run_service" "renderer" {
-  name     = "renderer"
-  location = var.gcpRegion
-
-  depends_on = [
-    google_project_service.project
-  ]
-}
-
 # Networks
 
 data "google_compute_network" "default" {
   name    = "default"
-  project = google_project.project.project_id
+  project = var.gcpProject
 }
-
-resource "google_compute_network" "vpc1" {
- name                    = "${var.customerAbv}-1-net"
- auto_create_subnetworks = false
- project                 = google_project.project.project_id
-}
-
-output "nw1" {
- value = google_compute_network.vpc1.self_link
-}
-
-# Create Subnet for Network1
-resource "google_compute_subnetwork" "subn1" {
- name          = "${var.customerAbv}-1-sn"
- ip_cidr_range = var.subnet_cidr1
- network       = google_compute_network.vpc1.self_link
- region        = var.gcpRegion
-}
-
 
 data "google_compute_subnetwork" "default" {
   name    = "default"
-  project = google_project.project.project_id
+  project = var.gcpProject
 }
 
 module "create_vpcs" {
@@ -173,7 +108,7 @@ module "create_vpcs" {
 
 data "google_compute_image" "fg-ngfw" {
   name    = var.fwimgName
-  project = "gcp-lab-305921"
+  project = data.google_project.project
 }
 
 resource "google_compute_disk" "fgvm-1-disk" {
@@ -201,7 +136,6 @@ resource "google_compute_address" "fgvm-3-ip" {
   address_type = "INTERNAL"
   project = google_project.project.project_id
 }
-
 
 resource "google_compute_instance" "fgvm-1" {
   project      = google_project.project.project_id
