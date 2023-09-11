@@ -89,7 +89,6 @@ data "google_compute_subnetwork" "default" {
 module "create_vpcs" {
   source = "./modules/create_vpcs"
 
-  gcpProject = var.gcpProject
   gcpRegion = var.gcpRegion
   gcpZone = var.gcpZone
 
