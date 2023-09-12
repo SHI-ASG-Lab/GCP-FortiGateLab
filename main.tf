@@ -119,7 +119,6 @@ resource "google_compute_disk" "fgvm-1-disk" {
 
 resource "google_compute_address" "fgvm-1-ip" {
   name = "fortilab-${var.customerAbv}-ext-fg-1-ip"
-  address_type = "EXTERNAL"
 }
 
 resource "google_compute_address" "fgvm-2-ip" {
@@ -142,7 +141,6 @@ resource "google_compute_instance" "fgvm-1" {
   }
   network_interface {
     network    = data.google_compute_network.default.self_link
-    subnetwork = data.google_compute_network.default.self_link
     access_config {
       nat_ip = google_compute_address.fgvm-1-ip.address
     }  
