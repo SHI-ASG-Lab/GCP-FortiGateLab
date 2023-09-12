@@ -88,12 +88,12 @@ data "google_compute_subnetwork" "default" {
 */
 
 resource "google_compute_network" "vpc0" {
- name                    = "${var.projectName}-0-net"
+ name                    = "fortilab-${var.customerAbv}-0-net"
  auto_create_subnetworks = false
 }
 
 output "nw1" {
- value = google_compute_network.vpc1.self_link
+ value = google_compute_network.vpc0.self_link
 }
 
 # Create Subnet for Network0
@@ -105,7 +105,7 @@ resource "google_compute_subnetwork" "subn0" {
 }
 
  output "sn0" {
- value = google_compute_subnetwork.subn1.self_link
+ value = google_compute_subnetwork.subn0.self_link
 }
 
 
