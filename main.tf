@@ -75,7 +75,7 @@ locals {
 }
 
 # Networks
-
+/*
 data "google_compute_network" "default" {
   name    = "default"
   project = var.gcpProject
@@ -85,6 +85,31 @@ data "google_compute_subnetwork" "default" {
   name    = "default"
   project = var.gcpProject
 }
+*/
+
+resource "google_compute_network" "vpc0" {
+ name                    = "${var.projectName}-0-net"
+ auto_create_subnetworks = false
+}
+
+output "nw1" {
+ value = google_compute_network.vpc1.self_link
+}
+
+# Create Subnet for Network0
+resource "google_compute_subnetwork" "subn0" {
+ name          = "fortilab-${var.customerAbv}-0-sn"
+ ip_cidr_range = "10.0.100.0/24"
+ network       = google_compute_network.vpc0.self_link
+ region        = var.gcpRegion
+}
+
+ output "sn0" {
+ value = google_compute_subnetwork.subn1.self_link
+}
+
+
+
 
 module "create_vpcs" {
   source = "./modules/create_vpcs"
@@ -140,7 +165,7 @@ resource "google_compute_instance" "fgvm-1" {
     source     = google_compute_disk.fgvm-1-disk.self_link
   }
   network_interface {
-    network    = data.google_compute_network.default.self_link
+    network    = google_compute_network.vpc0.self_link
     access_config {
       nat_ip = google_compute_address.fgvm-1-ip.address
     }  
