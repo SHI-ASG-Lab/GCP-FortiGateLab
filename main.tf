@@ -142,7 +142,8 @@ resource "google_compute_instance" "fgvm-1" {
   }
   network_interface {
     network    = data.google_compute_network.default.self_link
-#    subnetwork = data.google_compute_subnetwork.default.self_link
+    subnetwork = data.google_compute_network.default.self_link
+    network_ip = data.google_compute_network.default.address
     access_config {
       nat_ip = google_compute_address.fgvm-1-ip.address
     }  
