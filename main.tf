@@ -107,7 +107,6 @@ resource "google_compute_instance" "fgvm-1" {
       nat_ip = google_compute_address.fgvm-1-ip.address
     }  
   }
-  }
   labels = local.fg1Labels
   tags  = local.netTags
 }
