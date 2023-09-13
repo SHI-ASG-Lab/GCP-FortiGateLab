@@ -108,9 +108,6 @@ resource "google_compute_subnetwork" "subn0" {
  value = google_compute_subnetwork.subn0.self_link
 }
 
-
-
-
 module "create_vpcs" {
   source = "./modules/create_vpcs"
 
