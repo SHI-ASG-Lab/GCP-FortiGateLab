@@ -102,7 +102,7 @@ resource "google_compute_instance" "fgvm-1" {
   }
   network_interface {
     network    = google_compute_network.vpc0.self_link
-    subnetwork    = google_compute_network.vpc0.self_link
+    subnetwork = google_compute_network.subn0.self_link
     access_config {
       nat_ip = google_compute_address.fgvm-1-ip.address
     }  
