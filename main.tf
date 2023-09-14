@@ -39,6 +39,12 @@ variable "customerAbv" {
 variable "fwimgName" {
   type = string
 }
+variable "subnet_cidr1" {
+  type = string
+}
+variable "subnet_cidr2" {
+  type = string
+}
 
 # Locals
 
