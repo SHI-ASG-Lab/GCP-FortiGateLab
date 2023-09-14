@@ -145,6 +145,15 @@ resource "google_compute_instance" "fgvm-1" {
       nat_ip = google_compute_address.fgvm-1-ip.address
     }  
   }
+  network_interface {
+    network    = module.create_vpcs.nw1
+    subnetwork = module.create_vpcs.sn1
+    network_ip = var.fgint1
+    access_config {
+      nat_ip = google_compute_address.fgvm-2-ip.address
+    }
+  }
+
   labels = local.fg1Labels
   tags  = local.netTags
 }
