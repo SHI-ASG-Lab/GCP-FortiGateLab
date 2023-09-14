@@ -45,6 +45,12 @@ variable "subnet_cidr1" {
 variable "subnet_cidr2" {
   type = string
 }
+variable "fgint1" {
+  type = string
+}
+variable "fgint2" {
+  type = string
+}
 
 # Locals
 
@@ -79,6 +85,22 @@ resource "google_compute_subnetwork" "subn0" {
  value = google_compute_subnetwork.subn0.self_link
 }
 
+module "create_vpcs" {
+  source = "./modules/create_vpcs"
+
+  gcpRegion = var.gcpRegion
+  gcpZone = var.gcpZone
+
+  labels = local.fg1Labels
+  tags  = local.netTags
+
+  subnet_cidr1 = var.subnet_cidr1
+  subnet_cidr2 = var.subnet_cidr2
+  fgint1 = var.fgint1
+  fgint2 = var.fgint2
+  customerAbv = var.customerAbv
+  projectName = "fortilab-${var.customerAbv}"
+}
 
 # FortiGate
 
