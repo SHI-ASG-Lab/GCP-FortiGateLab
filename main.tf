@@ -125,6 +125,11 @@ resource "google_compute_address" "fgvm-2-ip" {
   address_type = "INTERNAL"
 }
 
+resource "google_compute_address" "fgvm-3-ip" {
+  name = "fortilab-${var.customerAbv}-int-fg-3-ip"
+  address_type = "INTERNAL"
+}
+
 resource "google_compute_instance" "fgvm-1" {
   project      = var.gcpProject
   name         = "fortilab-${var.customerAbv}-fortigate"
