@@ -133,7 +133,7 @@ resource "google_compute_address" "fgvm-3-ip" {
 resource "google_compute_instance" "fgvm-1" {
   project      = var.gcpProject
   name         = "fortilab-${var.customerAbv}-fortigate"
-  machine_type = "n1-standard-2"
+  machine_type = "n1-standard-4"
   zone         = var.gcpZone
   boot_disk {
     source     = google_compute_disk.fgvm-1-disk.self_link
