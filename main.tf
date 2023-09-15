@@ -121,8 +121,7 @@ resource "google_compute_address" "fgvm-1-ip" {
 }
 
 resource "google_compute_address" "fgvm-2-ip" {
-  name = "fortilab-${var.customerAbv}-int-fg-2-ip"
-  address_type = "INTERNAL"
+  name = "fortilab-${var.customerAbv}-ext-fg-2-ip"
 }
 
 resource "google_compute_address" "fgvm-3-ip" {
@@ -149,6 +148,9 @@ resource "google_compute_instance" "fgvm-1" {
     network    = module.create_vpcs.nw1
     subnetwork = module.create_vpcs.sn1
     network_ip = var.fgint1
+    access_config {
+      nat_ip = google_compute_address.fgvm-2-ip.address
+    }
   }
   network_interface {
     network    = module.create_vpcs.nw2
