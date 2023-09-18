@@ -72,7 +72,7 @@ locals {
     owner = "jwilliams"
     sp    = "lab"
   }
-  netTags = ["fortilab1"]
+  netTags = ["fortilab"]
 }
 
 # Networks
@@ -80,10 +80,6 @@ locals {
 resource "google_compute_network" "vpc0" {
  name                    = "fortilab-${var.customerAbv}-0-net"
  auto_create_subnetworks = false
-}
-
-output "nw0" {
- value = google_compute_network.vpc0.self_link
 }
 
 # Create Subnet for Network0
@@ -94,8 +90,16 @@ resource "google_compute_subnetwork" "subn0" {
  region        = var.gcpRegion
 }
 
- output "sn0" {
- value = google_compute_subnetwork.subn0.self_link
+resource "google_compute_firewall" "firewall0" {
+  name    = "${var.projectName}-firewall"
+  network = google_compute_network.vpc0.self_link
+
+  allow {
+    protocol  = "tcp"
+    ports     = ["80", "443"]
+  }
+  source_ranges = ["0.0.0.0/0"]
+  target_tags = ["fortilab"]
 }
 
 module "create_vpcs" {
