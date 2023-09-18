@@ -91,7 +91,7 @@ resource "google_compute_subnetwork" "subn0" {
 }
 
 resource "google_compute_firewall" "firewall0" {
-  name    = "fortilab-${var.customerAbv}-firewall"
+  name    = "fortilab-${var.customerAbv}-fw0"
   network = google_compute_network.vpc0.self_link
 
   allow {
