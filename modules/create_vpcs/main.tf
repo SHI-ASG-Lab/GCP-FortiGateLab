@@ -44,7 +44,7 @@ resource "google_compute_subnetwork" "subn2" {
 
 # VPC1 firewall configuration
 resource "google_compute_firewall" "firewall1" {
-  name    = "${var.projectName}-firewall"
+  name    = "${var.projectName}-fw1"
   network = google_compute_network.vpc1.self_link
 
   allow {
@@ -55,7 +55,7 @@ resource "google_compute_firewall" "firewall1" {
 
 # VPC2 firewall configuration
 resource "google_compute_firewall" "firewall2" {
-  name    = "${var.projectName}-firewall2"
+  name    = "${var.projectName}-fw2"
   network = google_compute_network.vpc2.self_link
 
   allow {
