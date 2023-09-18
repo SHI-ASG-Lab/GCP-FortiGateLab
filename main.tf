@@ -51,6 +51,19 @@ variable "fgint1" {
 variable "fgint2" {
   type = string
 }
+variable "ubnw1Count" {
+  type = number
+}
+variable "ubnw2Count" {
+  type = number
+}
+variable "win1Count" {
+  type = number
+}
+variable "win2Count" {
+  type = number
+}
+
 
 # Locals
 
@@ -159,4 +172,80 @@ resource "google_compute_instance" "fgvm-1" {
   }
   labels = local.fg1Labels
   tags  = local.netTags
+}
+
+# Ubuntu System(s)
+
+module "ubuntu_nw1" {
+  source = "./modules/ubuntu_nw1"
+  depends_on = [google_compute_instance.fgvm-1]
+  count  = var.ubnw1Count
+
+  gcpProject = var.gcpProject
+  gcpZone = var.gcpZone
+
+  labels = local.fg1Labels
+  tags  = local.netTags
+
+  ub1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index}"
+  disk1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index}-disk"
+
+  network1    = module.create_vpcs.nw1
+  subnetwork1 = module.create_vpcs.sn1
+}
+
+module "ubuntu_nw2" {
+  source = "./modules/ubuntu_nw2"
+  depends_on = [google_compute_instance.fgvm-1]
+  count  = var.ubnw2Count
+
+  gcpProject = var.gcpProject
+  gcpZone = var.gcpZone
+
+  labels = local.fg1Labels
+  tags  = local.netTags
+
+  ub2Name = "fortilab-${var.customerAbv}-ubuntu2-${count.index}"
+  disk2Name = "fortilab-${var.customerAbv}-ubuntu2-${count.index}-disk"
+
+  network2    = module.create_vpcs.nw2
+  subnetwork2 = module.create_vpcs.sn2
+}
+
+# Windows Systems(s)  
+  
+  module "winsrv1" {
+  source = "./modules/winsrv1"
+  depends_on = [google_compute_instance.fgvm-1]
+  count  = var.win1Count
+
+  gcpProject = var.gcpProject
+  gcpZone = var.gcpZone
+
+  labels = local.fg1Labels
+  tags  = local.netTags
+
+  win1Name = "fortilab-${var.customerAbv}-winsrv1-${count.index}"
+  disk1Name = "fortilab-${var.customerAbv}-winsrv1-${count.index}-disk"
+
+  network1    = module.create_vpcs.nw1
+  subnetwork1 = module.create_vpcs.sn1
+}
+    
+  module "winsrv2" {
+  source = "./modules/winsrv2"
+  depends_on = [google_compute_instance.fgvm-1]
+  count  = var.win2Count
+
+  gcpProject = var.gcpProject
+  gcpZone = var.gcpZone
+
+  labels = local.fg1Labels
+  tags  = local.netTags
+
+  win2Name = "fortilab-${var.customerAbv}-winsrv2-${count.index}"
+  disk2Name = "fortilab-${var.customerAbv}-winsrv2-${count.index}-disk"
+
+  network2    = module.create_vpcs.nw2
+  subnetwork2 = module.create_vpcs.sn2
 }
