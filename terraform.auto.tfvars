@@ -7,3 +7,7 @@ subnet_cidr1 = "10.0.110.0/24"
 subnet_cidr2 = "10.0.111.0/24"
 fgint1       = "10.0.110.2"
 fgint2       = "10.0.111.2"
+ubnw1Count   = 1
+ubnw2Count   = 1
+win1Count    = 1
+win2Count    = 1
