@@ -1,0 +1,4 @@
+---
+- name: Google Cloud Platform
+  version: 1.0.0
+  src: https://github.com/ansible/ansible-modules-core.git
