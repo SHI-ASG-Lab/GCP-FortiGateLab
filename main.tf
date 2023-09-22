@@ -34,10 +34,10 @@ variable "customerAbv" {
 variable "folder" {
   type = string
 }
-/*variable "billing_acct" {
+variable "billing_acct" {
   type = string
 }
-*/
+
 # Locals
 
 locals {
@@ -61,10 +61,10 @@ data "google_folder" "folder_1" {
 #  lookup_organization = true
 }
 
-/*data "google_billing_account" "acct" {
+data "google_billing_account" "acct" {
   billing_account = var.billing_acct     #"billingAccounts/001EEB-9F68FA-623770"
 }
-*/
+
 resource "google_project" "project" {
   name       = "test202309-001"                    #"${var.gcpProject}-${local.CreationDate}"
   project_id = "test202309-001"                    #"${var.gcpProject}-${local.CreationDate}"
@@ -109,7 +109,7 @@ variable "gcp_service_list" {
     "run.googleapis.com",
     "deploymentmanager.googleapis.com",
     "compute.googleapis.com",
-    # "cloudbilling.googleapis.com",
+    "cloudbilling.googleapis.com",
     "oslogin.googleapi.com",
     "cloudresourcemanager.googleapis.com",
     "appengine.googleapi.com",
