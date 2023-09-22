@@ -73,7 +73,7 @@ resource "google_project" "project" {
   billing_account = data.google_billing_account.acct.id
 }
 
-resource "time_resource" "wait_30_seconds" {
+resource "time_sleep" "wait_30_seconds" {
   depends_on = [google_project.my_project]
 
   create_duration = "30s"
