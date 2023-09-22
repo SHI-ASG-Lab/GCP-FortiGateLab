@@ -33,10 +33,10 @@ variable "customerAbv" {
 variable "folder" {
   type = string
 }
-variable "billing_acct" {
+/*variable "billing_acct" {
   type = string
 }
-
+*/
 # Locals
 
 locals {
@@ -60,16 +60,16 @@ data "google_folder" "folder_1" {
 #  lookup_organization = true
 }
 
-data "google_billing_account" "acct" {
+/*data "google_billing_account" "acct" {
   billing_account = var.billing_acct     #"billingAccounts/001EEB-9F68FA-623770"
 }
-
+*/
 resource "google_project" "project" {
   name       = "test"                    #"${var.gcpProject}-${local.CreationDate}"
   project_id = "test"                    #"${var.gcpProject}-${local.CreationDate}"
   folder_id  = data.google_folder.folder_1.folder
   org_id     = "66596309756"
-  billing_account = data.google_billing_account.acct.id
+  #billing_account = data.google_billing_account.acct.id
 }
 
 resource "google_project_iam_policy" "project" {
