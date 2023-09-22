@@ -34,9 +34,9 @@ variable "customerAbv" {
 variable "folder" {
   type = string
 }
-variable "billing_acct" {
+/*variable "billing_acct" {
   type = string
-}
+}*/
 
 # Locals
 
@@ -61,26 +61,26 @@ data "google_folder" "folder_1" {
 #  lookup_organization = true
 }
 
-data "google_billing_account" "acct" {
+/*data "google_billing_account" "acct" {
   billing_account = var.billing_acct     #"billingAccounts/001EEB-9F68FA-623770"
-}
+}*/
 
 resource "google_project" "project" {
   name       = "test202309-002"                    #"${var.gcpProject}-${local.CreationDate}"
   project_id = "test202309-002"                    #"${var.gcpProject}-${local.CreationDate}"
   folder_id  = data.google_folder.folder_1.folder
   #org_id     = "66596309756"
-  billing_account = data.google_billing_account.acct.id
+  #billing_account = data.google_billing_account.acct.id
 }
 
-resource "null_resource" "delay" {
+/*resource "null_resource" "delay" {
   provisioner "local-exec" {
     command = "sleep 60"
   }
   triggers = {
     "project" = "${google_project.project.id}"
   }
-}
+}*/
 
 resource "google_project_iam_policy" "project" {
   project     = google_project.project.project_id
@@ -117,7 +117,7 @@ variable "gcp_service_list" {
     "cloudresourcemanager.googleapis.com",
     "appengine.googleapi.com",
     "appengineflex.googleapi.com",
-    "cloudbuild.googleapi.com",
+    #"cloudbuild.googleapi.com",
     "serviceusage.googleapi.com",
     "iam.googleapi.com"
   ]
@@ -129,8 +129,8 @@ resource "google_project_service" "project" {
   service = each.key
   disable_dependent_services = true
   disable_on_destroy = true
-  depends_on = [null_resource.delay]
-  #depends_on = [google_project.project]
+  #depends_on = [null_resource.delay]
+  depends_on = [google_project.project]
 }
 /*resource "google_cloud_run_service" "renderer" {
   name     = "renderer"
