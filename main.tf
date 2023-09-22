@@ -117,7 +117,7 @@ variable "gcp_service_list" {
     "cloudresourcemanager.googleapis.com",
     "appengine.googleapi.com",
     "appengineflex.googleapi.com",
-    #"cloudbuild.googleapi.com",
+    "cloudbuild.googleapi.com",
     "serviceusage.googleapi.com",
     "iam.googleapi.com"
   ]
