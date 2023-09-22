@@ -132,7 +132,7 @@ resource "google_project_service" "project" {
   #depends_on = [null_resource.delay]
   depends_on = [google_project.project]
 }
-/*resource "google_cloud_run_service" "renderer" {
+resource "google_cloud_run_service" "renderer" {
   name     = "renderer"
   location = var.gcpRegion
 
@@ -140,4 +140,4 @@ resource "google_project_service" "project" {
     google_project_service.project
   ]
 }
-*/
+
