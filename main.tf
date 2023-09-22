@@ -74,7 +74,7 @@ resource "google_project" "project" {
 }
 
 resource "time_sleep" "wait_30_seconds" {
-  depends_on = [google_project.my_project]
+  depends_on = [google_project.project]
 
   create_duration = "30s"
 }
@@ -126,7 +126,7 @@ resource "google_project_service" "project" {
   service = each.key
   disable_dependent_services = true
   disable_on_destroy = true
-  depends_on = [time_resource.wait_30_seconds]
+  depends_on = [time_sleep.wait_30_seconds]
   #depends_on = [google_project.project]
 
 }
