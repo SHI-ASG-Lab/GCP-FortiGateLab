@@ -11,7 +11,7 @@ terraform {
 provider "google" {
   region  = var.gcpRegion
   zone    = var.gcpZone
-  user_project_override = "true"
+  user_project_override = true
 
 }
 
@@ -73,6 +73,12 @@ resource "google_project" "project" {
   billing_account = data.google_billing_account.acct.id
 }
 
+resource "time_resource" "wait_30_seconds" {
+  depends_on = [google_project.my_project]
+
+  create_duration = "30s"
+}
+
 resource "google_project_iam_policy" "project" {
   project     = google_project.project.project_id
   policy_data = data.google_iam_policy.admin.policy_data
@@ -120,10 +126,9 @@ resource "google_project_service" "project" {
   service = each.key
   disable_dependent_services = true
   disable_on_destroy = true
-
-  depends_on = [
-    google_project.project
-  ]
+  disable_dependent_services = true
+  depends_on = [time_resource.wait_30_seconds]
+  #depends_on = [google_project.project]
 
 }
 resource "google_cloud_run_service" "renderer" {
