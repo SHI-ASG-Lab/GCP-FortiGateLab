@@ -73,10 +73,13 @@ resource "google_project" "project" {
   billing_account = data.google_billing_account.acct.id
 }
 
-resource "time_sleep" "wait_30_seconds" {
-  depends_on = [google_project.project]
-
-  create_duration = "30s"
+resource "null_resource" "delay" {
+  provisioner "local-exec" {
+    command = "sleep 60"
+  }
+  triggers = {
+    "project" = "${google_project.project.id}"
+  }
 }
 
 resource "google_project_iam_policy" "project" {
@@ -126,9 +129,8 @@ resource "google_project_service" "project" {
   service = each.key
   disable_dependent_services = true
   disable_on_destroy = true
-  depends_on = [time_sleep.wait_30_seconds]
+  depends_on = [null_resource.delay]
   #depends_on = [google_project.project]
-
 }
 /*resource "google_cloud_run_service" "renderer" {
   name     = "renderer"
