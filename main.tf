@@ -109,7 +109,7 @@ variable "gcp_service_list" {
     "run.googleapis.com",
     "deploymentmanager.googleapis.com",
     "compute.googleapis.com",
-    #"cloudbilling.googleapis.com",
+    # "cloudbilling.googleapis.com",
     "oslogin.googleapi.com",
     "cloudresourcemanager.googleapis.com",
     "appengine.googleapi.com",
@@ -130,7 +130,7 @@ resource "google_project_service" "project" {
   #depends_on = [google_project.project]
 
 }
-resource "google_cloud_run_service" "renderer" {
+/*resource "google_cloud_run_service" "renderer" {
   name     = "renderer"
   location = var.gcpRegion
 
@@ -138,3 +138,4 @@ resource "google_cloud_run_service" "renderer" {
     google_project_service.project
   ]
 }
+*/
