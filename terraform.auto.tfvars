@@ -1,13 +1,5 @@
-gcpProject   = "dbugg"
 gcpRegion    = "us-central1"
 gcpZone      = "us-central1-a"
-customerAbv  = "dbugg"
-fwimgName    = "fortinet-ngfw74"
-subnet_cidr1 = "10.0.110.0/24"
-subnet_cidr2 = "10.0.111.0/24"
-fgint1       = "10.0.110.2"
-fgint2       = "10.0.111.2"
-ubnw1Count   = 1
-ubnw2Count   = 2
-win1Count    = 2
-win2Count    = 1
+customerAbv  = "test"
+folder       = "folders/603149754242"
+billing_acct = "billingAccounts/001EEB-9F68FA-623770"
