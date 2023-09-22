@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Create a new GCP project
+    gcp_project:
+      name: my-new-project
+      project_id: my-new-project
+      labels:
+        foo: bar
