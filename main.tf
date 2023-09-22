@@ -65,8 +65,8 @@ data "google_billing_account" "acct" {
 }
 
 resource "google_project" "project" {
-  name       = "${var.gcpProject}-${local.CreationDate}"
-  project_id = "${var.gcpProject}-${local.CreationDate}"
+  name       = "test"                    #"${var.gcpProject}-${local.CreationDate}"
+  project_id = "test"                    #"${var.gcpProject}-${local.CreationDate}"
   folder_id  = data.google_folder.folder_1.folder
   org_id     = "66596309756"
   billing_account = data.google_billing_account.acct.id
