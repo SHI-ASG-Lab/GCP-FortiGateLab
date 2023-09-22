@@ -126,7 +126,6 @@ resource "google_project_service" "project" {
   service = each.key
   disable_dependent_services = true
   disable_on_destroy = true
-  disable_dependent_services = true
   depends_on = [time_resource.wait_30_seconds]
   #depends_on = [google_project.project]
 
