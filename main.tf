@@ -11,6 +11,7 @@ terraform {
 provider "google" {
   region  = var.gcpRegion
   zone    = var.gcpZone
+  user_project_overrid = "true"
 
 }
 
