@@ -1,5 +1,0 @@
-gcpRegion    = "us-central1"
-gcpZone      = "us-central1-a"
-customerAbv  = "test"
-folder       = "folders/603149754242"
-billing_acct = "billingAccounts/001EEB-9F68FA-623770"
