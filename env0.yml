@@ -1,0 +1,11 @@
+version: 2
+
+deploy:
+  steps:
+    terraformInit:
+      before:
+        - name: "Terraform Plan: After"
+          run: |
+            gcloud auth activate-service-account ansible@gcp-lab-305921.iam.gserviceaccount.com --key-file=./gcp-ansible.json
+            gcloud projects create $gcpProject --folder=603149754242
+            gcloud billing projects link $gcpProject --billing-account=001EEB-9F68FA-623770 --quiet
