@@ -2,7 +2,7 @@
 
 data "google_compute_image" "winsrv1" {
   name  = "fortilab-winsrv2019"
-  project = var.gcpProject
+  project = "gcp-lab-305921"
 }
 
 resource "google_compute_disk" "winsrv1-disk" {
