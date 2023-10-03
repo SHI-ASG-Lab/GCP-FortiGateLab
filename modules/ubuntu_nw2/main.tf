@@ -2,7 +2,7 @@
 
 data "google_compute_image" "ubuntu2" {
   name  = "fortilab1-ubuntu"
-  project = var.gcpProject
+  project = gcp-lab-305921
 }
 
 resource "google_compute_disk" "ubuntu1-disk" {
