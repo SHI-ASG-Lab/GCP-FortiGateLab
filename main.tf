@@ -117,6 +117,7 @@ module "create_vpcs" {
   fgint2 = var.fgint2
   customerAbv = var.customerAbv
   projectName = "fortilab-${var.customerAbv}"
+  gcpProj = var.gcpProject
 }
 
 # FortiGate
