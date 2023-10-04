@@ -39,3 +39,7 @@ variable "customerAbv" {
 variable "projectName" {
   type = string
 }
+
+variable "gcpProj" {
+  type = string
+}
