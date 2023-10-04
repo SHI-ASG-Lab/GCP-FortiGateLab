@@ -77,8 +77,8 @@ resource "google_compute_route" "fgnw1to2" {
   ]
 }
 
-resource "google_compute_route" "fgnw2to1" {
-  name        = "${var.projectName}-fgnw2to1"
+resource "google_compute_route" "fgnw2toext" {
+  name        = "${var.projectName}-fgnw2toext"
   dest_range  = var.subnet_cidr1
   network     = google_compute_network.vpc2.self_link
   next_hop_instance = "projects/${var.gcpProj}/zones/${var.gcpZone}/instances/fortilab-${var.customerAbv}-fortigate"
