@@ -81,7 +81,7 @@ resource "google_compute_route" "fgnw2to1" {
   name        = "${var.projectName}-fgnw2to1"
   dest_range  = var.subnet_cidr1
   network     = google_compute_network.vpc2.self_link
-  next_hop_instance = "projects/${var.projectName}/zones/${var.gcpZone}/instances/${var.projectName}-fortigate"
+  next_hop_instance = "projects/${var.gcpProj}/zones/${var.gcpZone}/instances/fortilab-${var.customerAbv}-fortigate"
   priority    = 100
   #added depends_on because the route must be created after the subnet
   depends_on = [
