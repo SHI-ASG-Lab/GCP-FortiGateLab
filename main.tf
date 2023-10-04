@@ -191,8 +191,8 @@ module "ubuntu_nw1" {
   labels = local.fg1Labels
   tags  = local.netTags
 
-  ub1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index + 1}"
-  disk1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index}-disk"
+  ub1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index+1}"
+  disk1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index+1}-disk"
 
   network1    = module.create_vpcs.nw1
   subnetwork1 = module.create_vpcs.sn1
@@ -209,8 +209,8 @@ module "ubuntu_nw2" {
   labels = local.fg1Labels
   tags  = local.netTags
 
-  ub2Name = "fortilab-${var.customerAbv}-ubuntu2-${count.index}"
-  disk2Name = "fortilab-${var.customerAbv}-ubuntu2-${count.index}-disk"
+  ub2Name = "fortilab-${var.customerAbv}-ubuntu2-${count.index+1}"
+  disk2Name = "fortilab-${var.customerAbv}-ubuntu2-${count.index+1}-disk"
 
   network2    = module.create_vpcs.nw2
   subnetwork2 = module.create_vpcs.sn2
@@ -229,8 +229,8 @@ module "ubuntu_nw2" {
   labels = local.fg1Labels
   tags  = local.netTags
 
-  win1Name = "fortilab-${var.customerAbv}-winsrv1-${count.index}"
-  disk1Name = "fortilab-${var.customerAbv}-winsrv1-${count.index}-disk"
+  win1Name = "fortilab-${var.customerAbv}-winsrv1-${count.index+1}"
+  disk1Name = "fortilab-${var.customerAbv}-winsrv1-${count.index+1}-disk"
 
   network1    = module.create_vpcs.nw1
   subnetwork1 = module.create_vpcs.sn1
@@ -247,8 +247,8 @@ module "ubuntu_nw2" {
   labels = local.fg1Labels
   tags  = local.netTags
 
-  win2Name = "fortilab-${var.customerAbv}-winsrv2-${count.index}"
-  disk2Name = "fortilab-${var.customerAbv}-winsrv2-${count.index}-disk"
+  win2Name = "fortilab-${var.customerAbv}-winsrv2-${count.index+1}"
+  disk2Name = "fortilab-${var.customerAbv}-winsrv2-${count.index+1}-disk"
 
   network2    = module.create_vpcs.nw2
   subnetwork2 = module.create_vpcs.sn2
