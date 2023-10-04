@@ -191,7 +191,7 @@ module "ubuntu_nw1" {
   labels = local.fg1Labels
   tags  = local.netTags
 
-  ub1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index}"
+  ub1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index + 1}"
   disk1Name = "fortilab-${var.customerAbv}-ubuntu1-${count.index}-disk"
 
   network1    = module.create_vpcs.nw1
